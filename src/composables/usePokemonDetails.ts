@@ -7,7 +7,7 @@ export function usePokemonDetails() {
             const allData = await response.json();
             return {
                 name: allData.name,
-                order: allData.order,
+                order: allData.order.toString().padStart(3, '0'),
                 sprites: {
                     front_default: allData.sprites.front_default
                 },
