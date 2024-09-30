@@ -17,6 +17,7 @@ export const usePokemonStore = defineStore('pokemon', (): PokemonStoreState & Po
                 pokemonList.value.push(pokemonDetails);
             }
         }
+        pokemonList.value.sort((a, b) => a.order - b.order);
     }
 
     return {

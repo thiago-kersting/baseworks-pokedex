@@ -14,7 +14,7 @@
             <div class="flex flex-col items-center justify-center gap-2 mt-2">
                 <p class=" font-semibold">{{ pokemon.name }}</p>
                 <div class="flex gap-2 items-end justify-end">
-                    <Badge v-for="pokemonType in pokemon.types" :key="pokemonType.type.name" :type="pokemonType.type" />
+                    <Badge v-for="pokemonType in pokemon.types" :key="pokemonType.type.name" :typeName="pokemonType.type.name" />
                 </div>
             </div>
         </div>

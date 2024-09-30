@@ -1,38 +1,39 @@
 <template>
-    <span :class="['px-2 py-1 text-xs rounded-full text-white', getTypeColor(type.name)]">
-        {{ type.name }}
+    <span :class="['px-2 py-1 text-xs rounded-full text-white h-max', `bg-${typeColor} border border-${typeColor} select-none`, { [`!bg-transparent text-zinc-800 dark:text-white`]: outline } ]">
+        {{ typeName }}
     </span>
 </template>
 
 <script setup lang="ts">
-import { PokemonType } from "../types"
+import { computed } from "vue";
 
-defineProps<{
-    type: PokemonType['type']
+const props = defineProps<{
+    typeName: string;
+    outline?: boolean;
 }>()
 
 const typeColors = {
-    normal: 'bg-gray-400',
-    fire: 'bg-red-500',
-    water: 'bg-blue-500',
-    electric: 'bg-yellow-400',
-    grass: 'bg-green-500',
-    ice: 'bg-blue-200',
-    fighting: 'bg-red-700',
-    poison: 'bg-purple-500',
-    ground: 'bg-yellow-600',
-    flying: 'bg-indigo-400',
-    psychic: 'bg-pink-500',
-    bug: 'bg-lime-500',
-    rock: 'bg-yellow-700',
-    ghost: 'bg-purple-700',
-    dragon: 'bg-indigo-700',
-    dark: 'bg-gray-700',
-    steel: 'bg-gray-500',
-    fairy: 'bg-pink-300',
+    normal: 'gray-600',
+    fire: 'red-500',
+    water: 'blue-800',
+    electric: 'yellow-600',
+    grass: 'green-500',
+    ice: 'blue-500',
+    fighting: 'red-700',
+    poison: 'purple-500',
+    ground: 'yellow-600',
+    flying: 'indigo-600',
+    psychic: 'pink-800',
+    bug: 'lime-500',
+    rock: 'yellow-700',
+    ghost: 'purple-700',
+    dragon: 'indigo-700',
+    dark: 'gray-700',
+    steel: 'gray-500',
+    fairy: 'pink-500',
 };
 
-const getTypeColor = (type: string): string => {
-    return typeColors[type.toLowerCase() as keyof typeof typeColors] || 'bg-gray-400';
-};
+const typeColor = computed(() => {
+    return typeColors[props.typeName.toLowerCase() as keyof typeof typeColors] || 'bg-gray-400';
+});
 </script>
