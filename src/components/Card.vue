@@ -1,22 +1,24 @@
 <template>
-    <div class="group hover:-translate-y-1 duration-700 cursor-pointer transition-all flex flex-col py-4 px-6 rounded-2xl w-72 dark:bg-white/5 bg-zinc-500/5 hover:bg-zinc-500/10 hover:dark:bg-white/10 backdrop-blur-md border border-white/20 hover:border-purple-400 shadow-lg">
-        <div class="flex justify-between items-center mb-2">
-            <p class="font-light">#{{ pokemon.order }}</p>
-            <button>
-                <Icon icon="material-symbols-light:star-outline" class=" text-2xl" />
-            </button>
-        </div>
-        <div class="flex justify-center">
-            <img :src="pokemon.sprites.front_default" alt="pokemon"
-                class="w-24 h-24 transition-transform duration-300 ease-in-out group-hover:scale-125 group-hover:rotate-3">
-        </div>
-        <div class="flex flex-col items-center justify-center gap-2 mt-2">
-            <p class=" font-semibold">{{ pokemon.name }}</p>
-            <div class="flex gap-2 items-end justify-end">
-                <Badge v-for="type in pokemon.types" :key="type.type.url" :types="type" />
+    <RouterLink :to="`/details/${pokemon.id}`">
+        <div class="group hover:-translate-y-1 duration-700 cursor-pointer transition-all flex flex-col py-4 px-6 rounded-2xl w-72 dark:bg-white/5 bg-zinc-500/5 hover:bg-zinc-500/10 hover:dark:bg-white/10 backdrop-blur-md border border-white/20 hover:border-purple-400 shadow-lg">
+            <div class="flex justify-between items-center mb-2">
+                <p class="font-light">#{{ pokemon.order }}</p>
+                <button>
+                    <Icon icon="material-symbols-light:star-outline" class=" text-2xl" />
+                </button>
+            </div>
+            <div class="flex justify-center">
+                <img :src="pokemon.sprites.front_default" alt="pokemon"
+                    class="w-24 h-24 transition-transform duration-300 ease-in-out group-hover:scale-125 group-hover:rotate-3">
+            </div>
+            <div class="flex flex-col items-center justify-center gap-2 mt-2">
+                <p class=" font-semibold">{{ pokemon.name }}</p>
+                <div class="flex gap-2 items-end justify-end">
+                    <Badge v-for="pokemonType in pokemon.types" :key="pokemonType.type.name" :type="pokemonType.type" />
+                </div>
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <script lang="ts" setup>
@@ -27,4 +29,5 @@ import Badge from "./Badge.vue";
 defineProps<{
     pokemon: PokemonDetails
 }>()
+
 </script>

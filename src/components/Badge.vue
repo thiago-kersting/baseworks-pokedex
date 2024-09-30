@@ -1,13 +1,14 @@
 <template>
-    <span :class="['px-2 py-1 text-xs rounded-full text-white', getTypeColor(types.type.name)]">
-        {{ types.type.name }}
+    <span :class="['px-2 py-1 text-xs rounded-full text-white', getTypeColor(type.name)]">
+        {{ type.name }}
     </span>
 </template>
 
 <script setup lang="ts">
 import { PokemonType } from "../types"
+
 defineProps<{
-    types: PokemonType
+    type: PokemonType['type']
 }>()
 
 const typeColors = {

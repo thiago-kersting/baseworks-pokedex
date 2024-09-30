@@ -11,7 +11,9 @@ export function usePokemonDetails() {
                 sprites: {
                     front_default: allData.sprites.front_default
                 },
-                types: allData.types
+                types: allData.types,
+                id: allData.id,
+                stats: allData.stats
             };
         } catch (error) {
             console.error(`Erro ao buscar detalhes do Pokémon ${pokemonName}:`, error);

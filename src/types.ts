@@ -18,6 +18,8 @@ export interface PokemonDetails {
     order: number;
     sprites: PokemonSprites;
     types: [{ slot: number, type: { name: string, url: string } }];
+    id: string;
+    stats: [{ "base_stat": number, effort: number, stat: { name: string, url: string } }]
 }
 
 export interface PokemonStoreState {
