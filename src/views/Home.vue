@@ -15,43 +15,34 @@
       class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
     </div>
 
-    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20" ref="feed">
+    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20 px-16" ref="feed">
       <div class="flex flex-col items-center text-center gap-8">
         <h1 class="text-6xl font-semibold mt-2">Baseworks Pokedex Project</h1>
         <p class="font-light text-xl">Made by Thiago Kersting Puls</p>
-        <button @click="toggleDark()" class="px-4 py-2 text-white bg-gray-600 dark:bg-purple-700">
-          Dark Toggle
+        <button @click="toggleDark()" class="px-4 py-2 text-zinc-800 dark:text-white dark:text-zinc-950 bg-zinc-100 dark:bg-purple-700">
+          <span v-if="isDark">Dark Mode</span>
+          <span v-else>Light Mode</span>
         </button>
       </div>
-
-      <div class="h-full p-4 mx-auto max-w-[1024px]">
-        <ul class="flex flex-wrap justify-around gap-y-6" ref="feed">
-          <div
-            class="group hover:-translate-y-1 duration-700 cursor-pointer transition-all flex flex-col py-4 px-6 rounded-2xl w-72 dark:bg-white/5 bg-zinc-500/5 hover:bg-zinc-500/10 hover:bg-white/10 backdrop-blur-md border border-white/20 hover:border-purple-400 shadow-lg"
-            v-for="pokemon in pokemonList" :key="pokemon.order">
-            <div class="flex justify-between items-center mb-2">
-              <p class="font-light">#{{ pokemon.order }}</p>
-              <button @click="isFavorite.push(pokemon.order)">
-                <Icon icon="material-symbols-light:star-outline" class=" text-2xl" />
-              </button>
-            </div>
-            <div class="flex justify-center">
-              <img :src="pokemon.sprites.front_default" alt="pokemon"
-                class="w-24 h-24 transition-transform duration-300 ease-in-out group-hover:scale-125 group-hover:rotate-3">
-            </div>
-            <div class="flex flex-col items-center justify-center gap-2 mt-2">
-              <p class=" font-semibold">{{ pokemon.name }}</p>
-              <div class="flex gap-2 items-end justify-end">
-                <span v-for="types in pokemon.types" :key="types.type.url"
-                  class="px-2 py-1 text-xs rounded-full bg-zinc-300/20">
-                  {{ types.type.name }}
-                </span>
-              </div>
-            </div>
+      <section class="flex flex-col gap-10 max-w-[1024px] mx-auto">
+        <div class="flex justify-between">
+          <div class="flex gap-2 items-center flex-wrap">
+            <h1 class="font-light text-lg">Search by:</h1>
+            <input class="bg-zinc-500/5 dark:bg-white/10 px-4 py-2" placeholder="Name or Id" />
+            <button @click="toggleDark()" class="px-4 py-2 text-white bg-purple-700">
+              Submit
+            </button>
           </div>
-        </ul>
-        <div v-if="isLoading">Carregando...</div>
-      </div>
+
+          <div class="flex gap-2 items-center">
+            <h1 class="font-light text-lg">Filter by:</h1>
+          </div>
+        </div>
+          <ul class="flex flex-wrap flex-col items-center md:flex-row justify-around gap-y-6" ref="feed">
+            <Card v-for="pokemon in pokemonList" :key="pokemon.order" :pokemon="pokemon" />
+          </ul>
+          <div v-if="isLoading">Carregando...</div>
+      </section>
     </section>
 
 
@@ -64,7 +55,7 @@ import { onMounted, ref } from 'vue'
 import { usePokemonStore } from '../stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
-import { Icon } from "@iconify/vue"
+import Card from '../components/Card.vue';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -74,8 +65,6 @@ const { pokemonList, isLoading } = storeToRefs(pokemonStore)
 const { getListPokemons } = pokemonStore
 
 const feed = ref(null)
-
-const isFavorite = ref([])
 
 onMounted(() => {
   getListPokemons()  // Carregar a primeira página de Pokémon

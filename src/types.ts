@@ -29,3 +29,11 @@ export interface PokemonStoreState {
 export interface PokemonStoreActions {
     getListPokemons: () => Promise<void>;
 }
+
+export interface PokemonType {
+    slot: number,
+    type: {
+        name: string;
+        url: string;
+    }
+}
