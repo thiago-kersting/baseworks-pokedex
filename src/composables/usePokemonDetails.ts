@@ -9,7 +9,9 @@ export function usePokemonDetails() {
                 name: allData.name,
                 order: allData.order.toString().padStart(3, '0'),
                 sprites: {
-                    front_default: allData.sprites.front_default
+                    front_default: allData.sprites.other?.['official-artwork'].front_default,
+                    front_gif: allData.sprites.other.showdown.front_default,
+                    front_shiny: allData.sprites.other?.['official-artwork'].front_shiny
                 },
                 types: allData.types,
                 id: allData.id,

@@ -41,11 +41,11 @@
             </div>
             <div class="flex gap-2 justify-end">
               <button class="px-4 py-2 rounded-full text-zinc-800 dark:text-white border border-purple-700" @click="cleanTypes()">Limpar filtros</button>
-              <button class="px-4 py-2 rounded-full text-white bg-purple-700" @click="selectAllTypes()">Selecionar todos</button>
+              <button class="px-4 py-2 rounded-full text-white bg-purple-700" @click="selectAllTypesHandler()">Selecionar todos</button>
             </div>
           </div>
         </section>
-        <ul class="flex flex-wrap flex-col items-center md:flex-row justify-between gap-y-6" ref="feed">
+        <ul class="flex flex-wrap flex-col items-center md:flex-row gap-x-20 gap-y-6" ref="feed">
           <Card v-for="pokemon in filteredPokemonsList" :key="pokemon.order" :pokemon="pokemon" />
         </ul>
         <section class="flex items-center justify-center">
@@ -63,34 +63,32 @@
         </section>
       </section>
     </section>
-
-
   </main>
 
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { usePokemonStore } from '../stores/pokemonStore';
 import { storeToRefs } from 'pinia';
-import { useDark, useInfiniteScroll, useToggle, useDebounceFn } from '@vueuse/core';
+import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
 import Card from '../components/Card.vue';
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import Badge from '../components/Badge.vue';
-import { usePokemonDetails } from '../composables/usePokemonDetails';
-import { PokemonDetails } from '../types';
+import { useFilteredPokemons } from '../composables/useFilteredPokemons';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const pokemonStore = usePokemonStore()
-const { pokemonList, isLoading } = storeToRefs(pokemonStore)
+const { isLoading } = storeToRefs(pokemonStore)
 const { getListPokemons } = pokemonStore
 
 const feed = ref(null)
 
 onMounted(() => {
-  getListPokemons()  // Carregar a primeira página de Pokémon
+  getListPokemons()  // Carregar a primeira página de Pokémon~
+  selectAllTypesHandler()
 })
 
 const openFilters = ref(false);
@@ -116,87 +114,19 @@ const typesFilter = [
   "fairy"
 ]
 
-const selectedTypes = ref<string[]>(typesFilter);
+const {
+  searchPokemon,
+  selectedTypes,
+  filteredPokemonsList,
+  toggleTypeFilter,
+  cleanTypes,
+  selectAllTypes,
+  searchPokemonDebounced
+} = useFilteredPokemons()
 
-const toggleTypeFilter = (type: string) => {
-  if (searchPokemon.value.trim()) {
-    searchPokemonDebounced()
-  }
-  if (selectedTypes.value.includes(type)) {
-    selectedTypes.value = selectedTypes.value.filter(typeSelected => typeSelected !== type);
-  } else {
-    selectedTypes.value.push(type)
-  }
+const selectAllTypesHandler = () => {
+  selectAllTypes(typesFilter)
 }
-
-const searchPokemon = ref<string>("");
-const searchResult = ref<PokemonDetails | null>(null);
-
-const { getEachPokemon } = usePokemonDetails()
-
-const searchPokemonDebounced = useDebounceFn(async () => {
-  searchResult.value = null; // Resetar o resultado da pesquisa
-  if (searchPokemon.value.trim()) {
-    const localResults = pokemonList.value.filter(pokemon => 
-      pokemon.name.toLowerCase().startsWith(searchPokemon.value.toLowerCase())
-    );
-    
-    if (localResults.length === 0) {
-      const result = await getEachPokemon(searchPokemon.value.trim().toLowerCase());
-      if (result) {
-        // Verifica se o resultado tem pelo menos um tipo que está em selectedTypes
-        if (selectedTypes.value.length > 0) {
-          const hasSelectedType = result.types.some(type => 
-            selectedTypes.value.includes(type.type.name)
-          );
-          if (hasSelectedType) {
-            searchResult.value = result;
-          }
-        } else {
-          // Se nenhum tipo estiver selecionado, mostra o resultado normalmente
-          searchResult.value = null;
-        }
-      }
-    }
-  }
-}, 300);
-
-const filteredPokemonsList = computed(() => {
-  let filtered = pokemonList.value;
-
-  // Verifica se há tipos selecionados
-  if (selectedTypes.value.length === 0) {
-    return []; // Retorna uma lista vazia se nenhum tipo estiver selecionado
-  }
-
-  filtered = filtered.filter(pokemon => 
-    pokemon.types.some(type => selectedTypes.value.includes(type.type.name))
-  );
-
-  if (searchPokemon.value.trim()) {
-    const localFiltered = filtered.filter(pokemon => 
-      pokemon.name.toLowerCase().startsWith(searchPokemon.value.toLowerCase())
-    );
-
-    if (localFiltered.length === 0 && searchResult.value) {
-      return [searchResult.value];
-    }
-
-    return localFiltered;
-  }
-
-  return filtered;
-});
-
-const cleanTypes = () => {
-  selectedTypes.value = []
-}
-
-const selectAllTypes = () => {
-  selectedTypes.value = [...typesFilter]
-}
-
-
 
 // Configuração do Infinite Scroll
 useInfiniteScroll(
@@ -207,7 +137,7 @@ useInfiniteScroll(
     }
   },
   {
-    distance: 200,  // Distância do fim do scroll (em pixels) para disparar o carregamento
+    distance: 100,  // Distância do fim do scroll (em pixels) para disparar o carregamento
   }
 )
 </script>

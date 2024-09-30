@@ -11,6 +11,8 @@ export interface PokemonListResponse {
 
 export interface PokemonSprites {
     front_default: string;
+    front_gif: string;
+    front_shiny: string;
 }
 
 export interface PokemonDetails {
@@ -38,4 +40,12 @@ export interface PokemonType {
         name: string;
         url: string;
     }
+}
+
+export interface PokemonSpeciesEvolution {
+    firstEvolution: PokemonDetails | null;
+    secondEvolution: PokemonDetails | null;
+    thirdEvolution: PokemonDetails | null;
+    firstEvolutionLevel: number | null;
+    secondEvolutionLevel: number | null;
 }
