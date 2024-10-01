@@ -36,9 +36,9 @@
           </div>
 
         </div>
-        <section :class="['h-0 w-full overflow-hidden transition-all', { 'h-24': openFilters }]">
+        <section :class="['h-0 w-full overflow-hidden transition-all', { 'md:h-32 h-44': openFilters }]">
           <div class="flex flex-col gap-4">
-            <div class="flex gap-x-1 justify-around flex-wrap">
+            <div class="flex gap-1 min-[1084px]:justify-around justify-start flex-wrap">
               <Badge v-for="type in typesFilter" :typeName="type" class="cursor-pointer"
                 :outline="!selectedTypes.includes(type)" @click="toggleTypeFilter(type)" />
             </div>
@@ -50,7 +50,7 @@
             </div>
           </div>
         </section>
-        <ul class="flex flex-wrap flex-col items-center md:flex-row gap-x-20 gap-y-6" ref="feed">
+        <ul class="flex flex-wrap flex-col items-center justify-center md:flex-row gap-x-20 gap-y-6" ref="feed">
           <Card v-for="pokemon in filteredPokemonsList" :key="pokemon.order" :pokemon="pokemon" />
         </ul>
         <section class="flex items-center justify-center">

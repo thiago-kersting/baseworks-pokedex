@@ -4,23 +4,27 @@ export function usePokemonDetails() {
   async function getEachPokemon(
     pokemonNameOrId: string | number
   ): Promise<PokemonDetails | null> {
+    if (!pokemonNameOrId) {
+      return null;
+    }
+
     try {
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`
       );
-      const allData = await response.json();
+      const { name, order, sprites, types, id, stats } = await response.json();
+      const other = sprites.other;
       return {
-        name: allData.name,
-        order: allData.order.toString().padStart(3, "0"),
+        id,
+        name,
+        types,
+        stats,
+        order: order.toString().padStart(3, "0"),
         sprites: {
-          front_default:
-            allData.sprites.other?.["official-artwork"].front_default,
-          front_gif: allData.sprites.other.showdown.front_default,
-          front_shiny: allData.sprites.other?.["official-artwork"].front_shiny,
+          front_default: other?.["official-artwork"].front_default,
+          front_gif: other.showdown.front_default,
+          front_shiny: other?.["official-artwork"].front_shiny,
         },
-        types: allData.types,
-        id: allData.id,
-        stats: allData.stats,
       };
     } catch (error) {
       console.error(
