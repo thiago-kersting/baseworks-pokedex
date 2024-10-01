@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { usePokemonList } from "../api/usePokemonList.ts";
-import { usePokemonDetails } from "../api/usePokemonDetails.ts";
+import { usePokemonList } from "@/api/usePokemonList.ts";
+import { usePokemonDetails } from "@/api/usePokemonDetails.ts";
 import {
   PokemonDetails,
   PokemonStoreState,
   PokemonStoreActions,
-} from "../types";
+} from "@/types";
 
 export const usePokemonStore = defineStore(
   "pokemon",

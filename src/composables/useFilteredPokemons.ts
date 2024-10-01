@@ -1,9 +1,9 @@
 import { ref, computed } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { storeToRefs } from "pinia";
-import { usePokemonStore } from "../stores/pokemonStore";
-import { usePokemonDetails } from "../api/usePokemonDetails";
-import { PokemonDetails } from "../types";
+import { usePokemonStore } from "@/stores/pokemonStore";
+import { usePokemonDetails } from "@/api/usePokemonDetails";
+import { PokemonDetails } from "@/types";
 
 export function useFilteredPokemons() {
   const pokemonStore = usePokemonStore();

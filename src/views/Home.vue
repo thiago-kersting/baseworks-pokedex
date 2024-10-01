@@ -20,10 +20,13 @@
       </div>
       <section class="flex flex-col items-center justify-center gap-10 max-w-[1024px] mx-auto">
         <div class="flex items-end gap-2 md:max-w-[616px] w-full lg:max-w-full justify-between">
-          <div class="flex items-center gap-2 flex-wrap">
+          <div v-if="!showFavorites" class="flex items-center gap-2 flex-wrap">
             <h1 class="font-light text-lg">Pesquisar por:</h1>
             <input v-model="searchPokemon" @input="searchPokemonDebounced"
               class="bg-zinc-500/5 dark:bg-white/10 px-4 py-2 rounded-sm" placeholder="Name or Id" />
+          </div>
+          <div v-else>
+            <h1 class="font-light text-lg">Favorites Pokémon</h1>
           </div>
 
           <div class="flex items-center gap-10">
@@ -34,10 +37,20 @@
               <Icon icon="weui:arrow-filled"
                 :class="['transition-all hidden md:block', { 'rotate-90': openFilters }]" />
             </button>
-            <button class="h-10" @click="showFavorites = !showFavorites">
-              <Icon v-if="!showFavorites" icon="material-symbols-light:star-outline" class="text-2xl" />
-              <Icon v-else="showFavorites" icon="material-symbols-light:star" class="text-2xl" />
-            </button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <button class="h-10" @click="showFavorites = !showFavorites">
+                    <Icon v-if="!showFavorites" icon="material-symbols-light:star-outline" class="text-2xl" />
+                    <Icon v-else="showFavorites" icon="material-symbols-light:star" class="text-2xl" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent class="dark:bg-zinc-800 bg-zinc-200">
+                  <p v-if="!showFavorites">Show Favorites</p>
+                  <p v-else>Hide Favorites</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
 
         </div>
@@ -56,7 +69,7 @@
           </div>
         </section>
         <ul
-          class="flex flex-wrap flex-col items-center md:items-start justify-center md:flex-row lg:gap-x-20 md:gap-x-10 gap-y-6"
+          class="flex flex-wrap flex-col items-center md:items-start justify-center md:justify-start md:flex-row lg:gap-x-20 md:gap-x-10 gap-y-6"
           ref="feed">
           <Card v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" />
         </ul>
@@ -86,14 +99,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { usePokemonStore } from '../stores/pokemonStore';
+import { usePokemonStore } from '@/stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
-import Card from '../components/Card.vue';
+import Card from '@/components/Card.vue';
 import { Icon } from '@iconify/vue/dist/iconify.js';
-import Badge from '../components/Badge.vue';
-import { useFilteredPokemons } from '../composables/useFilteredPokemons';
-import { useFavoritePokemon } from '../composables/useFavoritePokemon';
+import Badge from '@/components/Badge.vue';
+import { useFilteredPokemons } from '@/composables/useFilteredPokemons';
+import { useFavoritePokemon } from '@/composables/useFavoritePokemon';
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)

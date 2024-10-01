@@ -27,9 +27,9 @@
 
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue"
-import { PokemonDetails } from "../types";
+import { PokemonDetails } from "@/types";
 import Badge from "./Badge.vue";
-import { useFavoritePokemon } from "../composables/useFavoritePokemon";
+import { useFavoritePokemon } from "@/composables/useFavoritePokemon";
 
 const { isFavorite, toggleFavorite } = useFavoritePokemon()
 

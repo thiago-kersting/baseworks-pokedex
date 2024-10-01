@@ -1,7 +1,7 @@
 import { useLocalStorage } from "@vueuse/core";
 import { ref, watch } from "vue";
-import { usePokemonDetails } from "../api/usePokemonDetails";
-import { PokemonDetails } from "../types";
+import { usePokemonDetails } from "@/api/usePokemonDetails";
+import { PokemonDetails } from "@/types";
 
 export function useFavoritePokemon() {
   const favoritePokemons = useLocalStorage<string[]>("favoritePokemons", []);

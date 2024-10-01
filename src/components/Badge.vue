@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import { typeColors } from "../utils/typeColors";
+import { typeColors } from "@/utils/typeColors";
 const props = defineProps<{
     typeName: string;
     outline?: boolean;

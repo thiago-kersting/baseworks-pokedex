@@ -112,12 +112,12 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { usePokemonDetails } from '../api/usePokemonDetails';
-import { PokemonDetails, PokemonSpeciesEvolution } from '../types';
-import Progress from '../components/ui/progress/Progress.vue';
-import Badge from '../components/Badge.vue';
+import { usePokemonDetails } from '@/api/usePokemonDetails';
+import { PokemonDetails, PokemonSpeciesEvolution } from '@/types';
+import Progress from '@/components/ui/progress/Progress.vue';
+import Badge from '@/components/Badge.vue';
 import { useDark } from '@vueuse/core';
-import { usePokemonEvolution } from '../composables/usePokemonEvolution';
+import { usePokemonEvolution } from '@/composables/usePokemonEvolution';
 
 const isDark = useDark();
 const { getEachPokemon } = usePokemonDetails();
