@@ -18,18 +18,20 @@
           <span class="text-white" v-else>Light Mode</span>
         </button>
       </div>
-      <section class="flex flex-col gap-10 w-[1024px] mx-auto">
-        <div class="flex justify-between">
+      <section class="flex flex-col gap-10 max-w-[1024px] mx-auto">
+        <div class="flex items-center justify-between">
           <div class="flex gap-2 items-center flex-wrap">
             <h1 class="font-light text-lg">Pesquisar por:</h1>
-            <input v-model="searchPokemon" @input="searchPokemonDebounced" class="bg-zinc-500/5 dark:bg-white/10 px-4 py-2 rounded-sm" placeholder="Nome ou Id" />
+            <input v-model="searchPokemon" @input="searchPokemonDebounced"
+              class="bg-zinc-500/5 dark:bg-white/10 px-4 py-2 rounded-sm" placeholder="Name or Id" />
           </div>
 
           <div class="flex gap-2 items-center">
             <button class="font-light text-lg flex gap-2 items-center" @click="openFilters = !openFilters">
               <Icon icon="mynaui:filter" />
-              Filter by types
-              <Icon icon="weui:arrow-filled" :class="['transition-all', { 'rotate-90': openFilters }]" />
+              <p class="hidden md:block">Filter by types</p>
+              <Icon icon="weui:arrow-filled"
+                :class="['transition-all hidden md:block', { 'rotate-90': openFilters }]" />
             </button>
           </div>
 
@@ -37,11 +39,14 @@
         <section :class="['h-0 w-full overflow-hidden transition-all', { 'h-24': openFilters }]">
           <div class="flex flex-col gap-4">
             <div class="flex gap-x-1 justify-around flex-wrap">
-              <Badge v-for="type in typesFilter" :typeName="type" class="cursor-pointer" :outline="!selectedTypes.includes(type)" @click="toggleTypeFilter(type)" />
+              <Badge v-for="type in typesFilter" :typeName="type" class="cursor-pointer"
+                :outline="!selectedTypes.includes(type)" @click="toggleTypeFilter(type)" />
             </div>
             <div class="flex gap-2 justify-end">
-              <button class="px-4 py-2 rounded-full text-zinc-800 dark:text-white border border-purple-700" @click="cleanTypes()">Limpar filtros</button>
-              <button class="px-4 py-2 rounded-full text-white bg-purple-700" @click="selectAllTypesHandler()">Selecionar todos</button>
+              <button class="px-4 py-2 rounded-full text-zinc-800 dark:text-white border border-purple-700"
+                @click="cleanTypes()">Clear Filters</button>
+              <button class="px-4 py-2 rounded-full text-white bg-purple-700" @click="selectAllTypesHandler()">Select
+                All</button>
             </div>
           </div>
         </section>
@@ -53,16 +58,19 @@
             <Icon icon="svg-spinners:gooey-balls-1" class="text-6xl text-purple-800" />
           </div>
           <div v-else-if="selectedTypes.length === 0" class="flex gap-2 items-center">
-            Selecione algum tipo de Pokemon para ver os resultados!
+            Select any type of Pokémon to see the results!
             <Icon icon="arcticons:pokemon-unite" class="text-2xl" />
           </div>
-          <div v-else-if="filteredPokemonsList.length === 0" class="flex gap-2 items-center">
-            Nenhum Pokémon encontrado. Tente outra busca!
-            <Icon icon="noto:magnifying-glass-tilted-left" class="text-2xl" />
+          <div v-else-if="filteredPokemonsList.length === 0" class="flex flex-col gap-5 items-center">
+            <div class="flex items-center gap-2">
+              No Pokémon found. Try searching with full name or id!
+              <Icon icon="noto:magnifying-glass-tilted-left" class="text-2xl" />
+            </div>
           </div>
         </section>
       </section>
     </section>
+
   </main>
 
 </template>

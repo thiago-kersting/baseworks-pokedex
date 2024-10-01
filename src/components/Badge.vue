@@ -1,5 +1,6 @@
 <template>
-    <span :class="['px-2 py-1 text-xs rounded-full text-white h-max', `bg-${typeColor} border border-${typeColor} select-none`, { [`!bg-transparent text-zinc-800 dark:text-white`]: outline } ]">
+    <span
+        :class="['px-2 py-1 text-xs rounded-full text-white h-max capitalize', `bg-${typeColor} border border-${typeColor} select-none`, { [`!bg-transparent text-zinc-800 dark:text-white`]: outline }]">
         {{ typeName }}
     </span>
 </template>
