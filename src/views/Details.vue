@@ -32,7 +32,7 @@
                                 <p class="text-sm font-medium capitalize mb-1">{{ stat.stat.name }}</p>
                                 <div class="flex items-center gap-2">
                                     <span class="text-lg font-bold w-8">{{ animatedStats[stat.stat.name] }}</span>
-                                    <Progress :model-value="animatedStats[stat.stat.name]" :max="120"
+                                    <Progress :model-value="animatedStats[stat.stat.name]" :max="200"
                                         class="flex-grow" />
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, reactive, computed, watch } from 'vue';
+import { onMounted, ref, reactive, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { usePokemonDetails } from '../api/usePokemonDetails';
 import { PokemonDetails, PokemonSpeciesEvolution } from '../types';
@@ -125,13 +125,12 @@ const { getPokemonEvolutions } = usePokemonEvolution()
 
 const route = useRoute();
 
-const pokemonId = computed(() => route.params.id as string);
 const pokemonDetails = ref<PokemonDetails | null>(null);
 const evolutions = ref<PokemonSpeciesEvolution | null>(null);
 const animatedStats = reactive<Record<string, number>>({});
 
 const fetchPokemonInfos = async () => {
-    pokemonDetails.value = await getEachPokemon(route.params.id);
+    pokemonDetails.value = await getEachPokemon(route.params.id as string | number);
 
     evolutions.value = await getPokemonEvolutions(pokemonDetails.value?.name)
 

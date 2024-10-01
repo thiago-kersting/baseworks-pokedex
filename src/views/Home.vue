@@ -9,7 +9,7 @@
       class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
     </div>
 
-    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20 px-16" ref="feed">
+    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20 md:px-16 px-12" ref="feed">
       <div class="flex flex-col items-center text-center gap-8">
         <h1 class="text-6xl font-semibold mt-2">Baseworks Pokedex Project</h1>
         <p class="font-light text-xl">Made by Thiago Kersting Puls</p>
@@ -18,20 +18,25 @@
           <span class="text-white" v-else>Light Mode</span>
         </button>
       </div>
-      <section class="flex flex-col gap-10 max-w-[1024px] mx-auto">
-        <div class="flex items-center justify-between">
-          <div class="flex gap-2 items-center flex-wrap">
+      <section class="flex flex-col items-center justify-center gap-10 max-w-[1024px] mx-auto">
+        <div class="flex items-end gap-2 md:max-w-[616px] w-full lg:max-w-full justify-between">
+          <div class="flex items-center gap-2 flex-wrap">
             <h1 class="font-light text-lg">Pesquisar por:</h1>
             <input v-model="searchPokemon" @input="searchPokemonDebounced"
               class="bg-zinc-500/5 dark:bg-white/10 px-4 py-2 rounded-sm" placeholder="Name or Id" />
           </div>
 
-          <div class="flex gap-2 items-center">
-            <button class="font-light text-lg flex gap-2 items-center" @click="openFilters = !openFilters">
+          <div class="flex items-center gap-10">
+            <button class="font-light text-lg flex gap-2 items-center h-10 rounded-full" v-if="!showFavorites"
+              @click="openFilters = !openFilters">
               <Icon icon="mynaui:filter" />
               <p class="hidden md:block">Filter by types</p>
               <Icon icon="weui:arrow-filled"
                 :class="['transition-all hidden md:block', { 'rotate-90': openFilters }]" />
+            </button>
+            <button class="h-10" @click="showFavorites = !showFavorites">
+              <Icon v-if="!showFavorites" icon="material-symbols-light:star-outline" class="text-2xl" />
+              <Icon v-else="showFavorites" icon="material-symbols-light:star" class="text-2xl" />
             </button>
           </div>
 
@@ -50,21 +55,25 @@
             </div>
           </div>
         </section>
-        <ul class="flex flex-wrap flex-col items-center justify-center md:flex-row gap-x-20 gap-y-6" ref="feed">
-          <Card v-for="pokemon in filteredPokemonsList" :key="pokemon.order" :pokemon="pokemon" />
+        <ul
+          class="flex flex-wrap flex-col items-center md:items-start justify-center md:flex-row lg:gap-x-20 md:gap-x-10 gap-y-6"
+          ref="feed">
+          <Card v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" />
         </ul>
         <section class="flex items-center justify-center">
-          <div v-if="isLoading">
-            <Icon icon="svg-spinners:gooey-balls-1" class="text-6xl text-purple-800" />
-          </div>
-          <div v-else-if="selectedTypes.length === 0" class="flex gap-2 items-center">
-            Select any type of Pokémon to see the results!
-            <Icon icon="arcticons:pokemon-unite" class="text-2xl" />
-          </div>
-          <div v-else-if="filteredPokemonsList.length === 0" class="flex flex-col gap-5 items-center">
-            <div class="flex items-center gap-2">
-              No Pokémon found. Try searching with full name or id!
-              <Icon icon="noto:magnifying-glass-tilted-left" class="text-2xl" />
+          <div class="h-72">
+            <div v-if="isLoading">
+              <Icon icon="svg-spinners:gooey-balls-1" class="text-6xl text-purple-800" />
+            </div>
+            <div v-else-if="selectedTypes.length === 0" class="flex gap-2 items-center">
+              Select any type of Pokémon to see the results!
+              <Icon icon="arcticons:pokemon-unite" class="text-2xl" />
+            </div>
+            <div v-else-if="filteredPokemonsList.length === 0" class="flex flex-col gap-5 items-center">
+              <div class="flex items-center gap-2">
+                No Pokémon found. Try searching with full name or id!
+                <Icon icon="noto:magnifying-glass-tilted-left" class="text-2xl" />
+              </div>
             </div>
           </div>
         </section>
@@ -76,7 +85,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { usePokemonStore } from '../stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
@@ -84,9 +93,19 @@ import Card from '../components/Card.vue';
 import { Icon } from '@iconify/vue/dist/iconify.js';
 import Badge from '../components/Badge.vue';
 import { useFilteredPokemons } from '../composables/useFilteredPokemons';
+import { useFavoritePokemon } from '../composables/useFavoritePokemon';
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const { pokemonFavoriteList } = useFavoritePokemon();
+
+const showFavorites = ref(false)
+
+const pokemonList = computed(() => {
+  return showFavorites.value ? pokemonFavoriteList.value : filteredPokemonsList.value
+})
+
 
 const pokemonStore = usePokemonStore()
 const { isLoading } = storeToRefs(pokemonStore)
@@ -94,9 +113,11 @@ const { getListPokemons } = pokemonStore
 
 const feed = ref(null)
 
+
 onMounted(() => {
   getListPokemons()  // Carregar a primeira página de Pokémon~
   selectAllTypesHandler()
+  console.log(pokemonFavoriteList)
 })
 
 const openFilters = ref(false);
@@ -140,7 +161,7 @@ const selectAllTypesHandler = () => {
 useInfiniteScroll(
   feed, // O elemento no qual o scroll será detectado
   () => {
-    if (!isLoading.value) {
+    if (!isLoading.value && selectedTypes.value.length > 0 && !showFavorites.value) {
       getListPokemons()  // Carregar mais Pokémon ao atingir o final da página
     }
   },

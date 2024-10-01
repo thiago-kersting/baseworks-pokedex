@@ -19,7 +19,7 @@ export function useFilteredPokemons() {
     searchResult.value = null;
 
     // Não buscar nada se não houver tipos selecionados
-    if (selectedTypes.value.length === 0 || !searchPokemon.value.trim()) {
+    if (selectedTypes.value.length === 0) {
       return;
     }
 
@@ -79,13 +79,14 @@ export function useFilteredPokemons() {
       selectedTypes.value.push(type);
     }
 
-    if (searchPokemon.value.trim()) {
+    if (selectedTypes.value.length > 0 && searchPokemon.value.trim()) {
       searchPokemonDebounced();
     }
   };
 
   const cleanTypes = () => {
     selectedTypes.value = [];
+    searchResult.value = null; // Reseta o resultado da busca
   };
 
   const selectAllTypes = (typesFilter: string[]) => {
