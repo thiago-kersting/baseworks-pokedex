@@ -1,5 +1,5 @@
-import { usePokemonDetails } from "@/api/usePokemonDetails";
-import { PokemonSpeciesEvolution } from "@/types";
+import { usePokemonDetails } from "./usePokemonDetails";
+import { PokemonSpeciesEvolution } from "../types";
 
 export function usePokemonEvolution() {
   const { getEachPokemon } = usePokemonDetails();
