@@ -17,9 +17,9 @@
 
                 <!-- Adicione o botão de voltar aqui, dentro do card -->
                 <button @click="$router.push('/')"
-                    class="absolute top-4 left-4 px-3 py-1 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition-colors text-sm flex gap-2 items-center">
-                    <Icon icon="material-symbols:arrow-back-rounded" />
-                    Return
+                    class="absolute top-4 left-4 px-3 py-1 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition-colors text-sm flex gap-2 items-center capitalize">
+                    <Icon icon="material-symbols:arrow-back-rounded" class="text-white" />
+                    {{ t('return') }}
                 </button>
 
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
@@ -36,11 +36,11 @@
 
                     <!-- Coluna da direita -->
                     <div class="flex-grow mt-10">
-                        <h2 class="text-2xl font-semibold mb-4">Estatísticas</h2>
+                        <h2 class="text-2xl font-semibold mb-4 capitalize">{{ t('detailsPage.stats') }}</h2>
                         <div class="grid grid-cols-2 gap-4">
                             <div v-for="stat in pokemonDetails.stats" :key="stat.stat.name"
                                 class="bg-white/5 rounded-lg p-3">
-                                <p class="text-sm font-medium capitalize mb-1">{{ stat.stat.name }}</p>
+                                <p class="text-sm font-medium capitalize mb-1">{{ t(`pokemon.status.${stat.stat.name}`) }}</p>
                                 <div class="flex items-center gap-2">
                                     <span class="text-lg font-bold w-8">{{ animatedStats[stat.stat.name] ?
                                         animatedStats[stat.stat.name] : stat.base_stat }}</span>
@@ -53,9 +53,9 @@
                     </div>
                 </div>
 
-                <div class="mt-4 flex flex-wrap justify-around gap-8">
+                <div class="mt-4 flex flex-wrap items-center justify-around gap-8">
                     <div class="flex flex-col items-center justify-center">
-                        <h3 class="text-xl font-semibold mb-2">Variations</h3>
+                        <h3 class="text-xl font-semibold mb-2 capitalize">{{ t('detailsPage.variations') }}</h3>
                         <div class="flex items-center justify-center gap-4">
                             <div class="flex flex-col justify-center items-center"
                                 v-if="pokemonDetails.sprites.front_shiny">
@@ -67,47 +67,49 @@
                                 v-if="pokemonDetails.sprites.front_gif">
                                 <img :src="pokemonDetails.sprites.front_gif" :alt="`${pokemonDetails.name} shiny`"
                                     class="w-24 h-24 object-contain">
-                                <p class="text-sm mt-1">Animated</p>
+                                <p class="text-sm mt-1 capitalize">{{ t('detailsPage.realLife') }}</p>
                             </div>
                         </div>
                     </div>
 
                     <div v-if="evolutions">
-                        <h3 class="text-xl font-semibold mb-2">Evolutions</h3>
-                        <div class="flex items-center">
-                            <div v-if="evolutions.firstEvolution" class="text-center">
-                                <router-link :to="`/details/${evolutions.firstEvolution.id}`">
-                                    <img :src="evolutions.firstEvolution.sprites.front_default"
-                                        :alt="evolutions.firstEvolution.name"
-                                        class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
-                                    <p class="text-sm mt-1 capitalize">{{ evolutions.firstEvolution.name }}</p>
-                                </router-link>
-                            </div>
-                            <div v-if="evolutions.secondEvolution" class="flex items-center">
-                                <div class="mx-2 text-center">
-                                    <p class="text-xs" v-if="evolutions.firstEvolutionLevel">Nível {{
-                                        evolutions.firstEvolutionLevel }}</p>
-                                    <span class="text-2xl">→</span>
+                        <div class="flex flex-col items-center justify-center">
+                            <h3 class="text-xl font-semibold mb-2 capitalize">{{ t('detailsPage.evolutions') }}</h3>
+                            <div class="flex items-center">
+                                <div v-if="evolutions.firstEvolution" class="text-center">
+                                    <router-link :to="`/details/${evolutions.firstEvolution.id}`">
+                                        <img :src="evolutions.firstEvolution.sprites.front_default"
+                                            :alt="evolutions.firstEvolution.name"
+                                            class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
+                                        <p class="text-sm mt-1 capitalize">{{ evolutions.firstEvolution.name }}</p>
+                                    </router-link>
                                 </div>
-                                <router-link :to="`/details/${evolutions.secondEvolution.id}`" class="text-center">
-                                    <img :src="evolutions.secondEvolution.sprites.front_default"
-                                        :alt="evolutions.secondEvolution.name"
-                                        class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
-                                    <p class="text-sm mt-1 capitalize">{{ evolutions.secondEvolution.name }}</p>
-                                </router-link>
-                            </div>
-                            <div v-if="evolutions.thirdEvolution" class="flex items-center">
-                                <div class="mx-2 text-center">
-                                    <p class="text-xs" v-if="evolutions.secondEvolutionLevel">Nível {{
-                                        evolutions.secondEvolutionLevel }}</p>
-                                    <span class="text-2xl">→</span>
+                                <div v-if="evolutions.secondEvolution" class="flex items-center">
+                                    <div class="mx-2 text-center">
+                                        <p class="text-xs capitalize" v-if="evolutions.firstEvolutionLevel">{{ t('pokemon.status.level') }} {{
+                                            evolutions.firstEvolutionLevel }}</p>
+                                        <span class="text-2xl">→</span>
+                                    </div>
+                                    <router-link :to="`/details/${evolutions.secondEvolution.id}`" class="text-center">
+                                        <img :src="evolutions.secondEvolution.sprites.front_default"
+                                            :alt="evolutions.secondEvolution.name"
+                                            class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
+                                        <p class="text-sm mt-1 capitalize">{{ evolutions.secondEvolution.name }}</p>
+                                    </router-link>
                                 </div>
-                                <router-link :to="`/details/${evolutions.thirdEvolution.id}`" class="text-center">
-                                    <img :src="evolutions.thirdEvolution.sprites.front_default"
-                                        :alt="evolutions.thirdEvolution.name"
-                                        class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
-                                    <p class="text-sm mt-1 capitalize">{{ evolutions.thirdEvolution.name }}</p>
-                                </router-link>
+                                <div v-if="evolutions.thirdEvolution" class="flex items-center">
+                                    <div class="mx-2 text-center">
+                                        <p class="text-xs capitalize" v-if="evolutions.secondEvolutionLevel">{{ t('pokemon.status.level') }} {{
+                                            evolutions.secondEvolutionLevel }}</p>
+                                        <span class="text-2xl">→</span>
+                                    </div>
+                                    <router-link :to="`/details/${evolutions.thirdEvolution.id}`" class="text-center">
+                                        <img :src="evolutions.thirdEvolution.sprites.front_default"
+                                            :alt="evolutions.thirdEvolution.name"
+                                            class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
+                                        <p class="text-sm mt-1 capitalize">{{ evolutions.thirdEvolution.name }}</p>
+                                    </router-link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -123,11 +125,15 @@ import { useRoute } from 'vue-router';
 import { usePokemonDetails } from '@/api/usePokemonDetails';
 import { PokemonDetails, PokemonSpeciesEvolution } from '@/types';
 import Progress from '@/components/ui/progress/Progress.vue';
-import Badge from '@/components/Badge.vue';
+import Badge from '@/components/BadgeType.vue';
 import { useDark } from '@vueuse/core';
 import { usePokemonEvolution } from '@/api/usePokemonEvolution';
 import { typeColors } from '@/utils/typeColors';
 import { Icon } from '@iconify/vue/dist/iconify.js';
+
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const isDark = useDark();
 const { getEachPokemon } = usePokemonDetails();

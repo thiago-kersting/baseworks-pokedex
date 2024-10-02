@@ -49,11 +49,10 @@
       <div v-if="isExpanded" 
            class="stats-comparison mt-4 transition-all duration-500 ease-in-out"
            :class="{ 'opacity-100 max-h-96': isExpanded, 'opacity-0 max-h-0': !isExpanded }">
-           <p class="font-light text-sm text-center mt-4 dark:text-zinc-500 text-zinc-500">Clique no pokemon para remover</p>
-           <button @click="clearComparison()" class="font-light text-sm text-center mt-1 mb-2 dark:text-zinc-500 text-zinc-500 w-full">ou clique aqui para remover os dois</button>
+           <button @click="clearComparison()" class="font-light text-sm text-center my-4 dark:text-zinc-500 text-zinc-500 w-full">{{ t('compareCard.text') }}</button>
         <div class="flex flex-col items-center">
           <div v-for="stat in pokemon1.stats" :key="stat.stat.name" class="stat-row flex items-center mb-2 w-full max-w-xs">
-            <div class="stat-name w-20 text-right mr-2 text-xs dark:text-zinc-300 text-nowrap">{{ stat.stat.name }}</div>
+            <div class="stat-name w-20 text-right mr-2 text-xs dark:text-zinc-300 text-nowrap">{{ t(`pokemon.status.${stat.stat.name}`) }}</div>
             <div class="stat-bars flex flex-grow gap-1">
               <div class="stat-bar h-4 bg-zinc-200 dark:bg-zinc-600 rounded-full flex items-center justify-center text-xs text-zinc-700 dark:text-zinc-300 transition-all duration-500 ease-in-out"
                    :class="{ 'bg-green-500 dark:bg-green-600 text-white': stat.base_stat > getPokemonStat(pokemon2, stat.stat.name) }"
@@ -82,6 +81,10 @@ const props = defineProps({
   pokemon1: { type: Object, default: null },
   pokemon2: { type: Object, default: null }
 });
+
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 import { useComparePokemons } from '@/composables/useComparePokemons';
 

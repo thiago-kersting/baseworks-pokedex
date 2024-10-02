@@ -36,7 +36,7 @@
 <script lang="ts" setup>
 import { Icon } from "@iconify/vue"
 import { PokemonDetails } from "@/types";
-import Badge from "./Badge.vue";
+import Badge from "./BadgeType.vue";
 import { useFavoritePokemon } from "@/composables/useFavoritePokemon";
 import { useComparePokemons } from "@/composables/useComparePokemons";
 

@@ -1,0 +1,72 @@
+{
+    "return": "voltar",
+    "changeLocation": "Mudar para Inglês",
+    "title": "Projeto Pokedex Baseworks",
+    "madeBy": "Feito por {name}",
+    "switchColor": {
+        "dark": "Modo Escuro",
+        "light": "Modo Claro"
+    },
+    "inputSearch": {
+        "label": "Buscar por:",
+        "placeholder": "Nome ou Id"
+    },
+    "filter": {
+        "title": "Filtrar por tipos",
+        "buttons": {
+            "clear": "Limpar Filtros",
+            "selectAll": "Selecionar Todos"
+        }
+    },
+    "favPokemons": {
+        "title": "Pokémons Favoritos",
+        "tooltipEnter": "Mostrar Favoritos",
+        "tooltipLeave": "Mostrar Todos"
+    },
+    "pokemon": {
+        "types": {
+            "normal": "normal",
+            "fire": "fogo",
+            "water": "água",
+            "electric": "elétrico",
+            "grass": "grama",
+            "ice": "gelo",
+            "fighting": "lutador",
+            "poison": "veneno",
+            "ground": "terra",
+            "flying": "voador",
+            "psychic": "psíquico",
+            "bug": "inseto",
+            "rock": "pedra",
+            "ghost": "fantasma",
+            "dragon": "dragão",
+            "dark": "sombrio",
+            "steel": "aço",
+            "fairy": "fada"
+        },
+        "status": {
+            "hp": "hp",
+            "attack": "ataque",
+            "defense": "defesa",
+            "special-attack": "ataque especial",
+            "special-defense": "defesa especial",
+            "speed": "velocidade",
+            "level": "Nível"
+        }
+    },
+    "compareCard": {
+        "text": "Clique no pokemon para remover-lo ou clique aqui para remover os dois."
+    },
+    "detailsPage": {
+        "stats": "estatísticas",
+        "variations": "variações",
+        "evolutions": "evoluções",
+        "realLife": "vida real"
+    },
+    "errors": {
+    "noTypesSelected": "Selecione algum tipo de Pokémon para ver os resultados!",
+    "noPokemonFound": "Nenhum Pokémon encontrado. Tente buscar pelo nome completo ou pelo ID!",
+    "noFavoritePokemon": "Nenhum Pokémon favorito encontrado. Tente salvar algum Pokémon como favorito!"
+}
+
+}

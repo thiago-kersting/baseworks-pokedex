@@ -1,0 +1,72 @@
+{
+    "return": "back",
+    "changeLocation": "Switch to Portuguese",
+    "title": "Baseworks Pokedex Project",
+    "madeBy": "Made by {name}",
+    "switchColor": {
+        "dark": "Dark Mode",
+        "Light": "Light Mode"
+    },
+    "inputSearch": {
+        "label": "Search by:",
+        "placeholder": "Name or Id"
+    },
+    "filter": {
+        "title": "Filter by types",
+        "buttons": {
+            "clear": "Clear Filters",
+            "selectAll": "Select All"
+        }
+    },
+    "favPokemons": {
+        "title": "Favorite Pokemons",
+        "tooltipEnter": "Show Favorites",
+        "tooltipLeave": "Show All"
+    },
+    "pokemon": {
+        "types": {
+            "normal": "normal",
+            "fire": "fire",
+            "water": "water",
+            "electric": "electric",
+            "grass": "grass",
+            "ice": "ice",
+            "fighting": "fighting",
+            "poison": "poison",
+            "ground": "ground",
+            "flying": "flying",
+            "psychic": "psychic",
+            "bug": "bug",
+            "rock": "rock",
+            "ghost": "ghost",
+            "dragon": "dragon",
+            "dark": "dark",
+            "steel": "steel",
+            "fairy": "fairy"
+        },
+        "status": {
+            "hp": "hp",
+            "attack": "attack",
+            "defense": "defense",
+            "special-attack": "special-attack",
+            "special-defense": "special-defense",
+            "speed": "speed",
+            "level": "Level"
+        }
+    },
+    "compareCard": {
+        "text": "Click on the Pokémon to remove it or click here to remove both."
+    },
+    "detailsPage": {
+        "stats": "stats",
+        "variations": "variations",
+        "evolutions": "evolutions",
+        "realLife": "real life"
+    },
+    "errors": {
+    "noTypesSelected": "Select any type of Pokémon to see the results!",
+    "noPokemonFound": "No Pokémon found. Try searching with the full name or ID!",
+    "noFavoritePokemon": "No favorite Pokémon found. Try saving a Pokémon as a favorite!"
+}
+
+}
