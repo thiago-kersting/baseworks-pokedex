@@ -1,16 +1,30 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { useFilteredPokemons } from "@/composables/useFilteredPokemons";
-import { usePokemonStore } from "@/stores/pokemonStore";
+/* import { usePokemonStore } from "@/stores/pokemonStore"; */
 import { usePokemonDetails } from "@/api/usePokemonDetails";
 import { ref, nextTick } from 'vue';
+import { PokemonDetails } from "@/types";
 
 // Mock dos módulos
 vi.mock("@/stores/pokemonStore", () => ({
   usePokemonStore: vi.fn(() => ({
-    pokemonList: ref([
-      { name: "bulbasaur", types: [{ type: { name: "grass" } }] },
-      { name: "charmander", types: [{ type: { name: "fire" } }] },
-      { name: "squirtle", types: [{ type: { name: "water" } }] },
+    pokemonList: ref<PokemonDetails[]>([
+      { 
+        name: "bulbasaur", 
+        order: 1,
+        sprites: { front_default: "", front_gif: "", front_shiny: "" },
+        types: [{ slot: 1, type: { name: "grass", url: "teste" } }],
+        id: "1",
+        stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
+      },
+      { 
+        name: "charmander", 
+        order: 4,
+        sprites: { front_default: "", front_gif: "", front_shiny: "" },
+        types: [{ slot: 1, type: { name: "fire", url: "teste" } }],
+        id: "4",
+        stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
+      },
     ])
   }))
 }));
@@ -25,13 +39,26 @@ describe("useFilteredPokemons", () => {
     vi.useFakeTimers();
 
     // Atualize o mock do store para usar ref
-    vi.mocked(usePokemonStore).mockReturnValue({
-      pokemonList: ref([
-        { name: "bulbasaur", types: [{ type: { name: "grass" } }] },
-        { name: "charmander", types: [{ type: { name: "fire" } }] },
-        { name: "squirtle", types: [{ type: { name: "water" } }] },
+    /* vi.mocked(usePokemonStore).mockReturnValue({
+      pokemonList: ref<PokemonDetails[]>([
+        { 
+          name: "bulbasaur", 
+          order: 1,
+          sprites: { front_default: "", front_gif: "", front_shiny: "" },
+          types: [{ slot: 1, type: { name: "grass", url: "teste" } }],
+          id: "1",
+          stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
+        },
+        { 
+          name: "charmander", 
+          order: 4,
+          sprites: { front_default: "", front_gif: "", front_shiny: "" },
+          types: [{ slot: 1, type: { name: "fire", url: "teste" } }],
+          id: "4",
+          stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
+        },
       ])
-    });
+    }); */
 
     // Mock do usePokemonDetails
     vi.mocked(usePokemonDetails).mockReturnValue({

@@ -77,7 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 
-const props = defineProps({
+defineProps({
   pokemon1: { type: Object, default: null },
   pokemon2: { type: Object, default: null }
 });
@@ -98,12 +98,12 @@ const toggleExpand = () => {
 };
 
 const getPokemonStat = (pokemon: any, statName: string) => {
-  const stat = pokemon.stats.find(s => s.stat.name === statName);
+  const stat = pokemon.stats.find((s: { stat: { name: string } }) => s.stat.name === statName);
   return stat ? stat.base_stat : 0;
 };
 
 const handleClickOutside = (event: Event) => {
-  if (cardRef.value && !cardRef.value.contains(event.target)) {
+  if (cardRef.value && event.target instanceof Node && !cardRef.value.contains(event.target)) {
     isExpanded.value = false;
   }
 };

@@ -43,7 +43,7 @@ import { useComparePokemons } from "@/composables/useComparePokemons";
 const { pokemonCompareList, addPokemon, isPokemonCompare, removePokemon } = useComparePokemons();
 const { isFavorite, toggleFavorite } = useFavoritePokemon()
 
-const props = defineProps<{
+defineProps<{
     pokemon: PokemonDetails
 }>()
 
