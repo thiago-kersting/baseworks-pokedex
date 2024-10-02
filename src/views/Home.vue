@@ -9,7 +9,7 @@
       class="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
     </div>
 
-    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20 md:px-16 px-12" ref="feed">
+    <section class="relative z-10 h-screen overflow-y-auto pt-40 flex flex-col gap-20 md:px-16 px-4" ref="feed">
       <div class="flex flex-col items-center text-center gap-8">
         <h1 class="text-6xl font-semibold mt-2">Baseworks Pokedex Project</h1>
         <p class="font-light text-xl">Made by Thiago Kersting Puls</p>
@@ -18,6 +18,12 @@
           <span class="text-white" v-else>Light Mode</span>
         </button>
       </div>
+      
+        <PokemonComparisonCard
+          :pokemon1="pokemonCompareList[0]"
+          :pokemon2="pokemonCompareList[1]"
+        />
+
       <section class="flex flex-col items-center justify-center gap-10 max-w-[1024px] mx-auto">
         <div class="flex items-end gap-2 md:max-w-[616px] w-full lg:max-w-full justify-between">
           <div v-if="!showFavorites" class="flex items-center gap-2 flex-wrap">
@@ -109,6 +115,12 @@ import { useFilteredPokemons } from '@/composables/useFilteredPokemons';
 import { useFavoritePokemon } from '@/composables/useFavoritePokemon';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 
+
+import { useComparePokemons } from '@/composables/useComparePokemons';
+import PokemonComparisonCard from '@/components/PokemonComparisonCard.vue';
+
+const { pokemonCompareList, removePokemon, clearComparison } = useComparePokemons();
+
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
@@ -175,7 +187,7 @@ const selectAllTypesHandler = () => {
 useInfiniteScroll(
   feed, // O elemento no qual o scroll será detectado
   () => {
-    if (!isLoading.value && selectedTypes.value.length > 0 && !showFavorites.value) {
+    if (!isLoading.value && selectedTypes.value.length > 0 && searchPokemon.value && !showFavorites.value) {
       getListPokemons()  // Carregar mais Pokémon ao atingir o final da página
     }
   },
