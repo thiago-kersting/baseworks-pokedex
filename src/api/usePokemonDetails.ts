@@ -13,7 +13,7 @@ export function usePokemonDetails() {
         `https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`
       );
       const { name, order, sprites, types, id, stats } = await response.json();
-      const other = sprites.other;
+      const other = sprites?.other;
       return {
         id,
         name,
@@ -24,9 +24,9 @@ export function usePokemonDetails() {
             ? order.toString()
             : order.toString().padStart(3, "0"),
         sprites: {
-          front_default: other?.["official-artwork"].front_default,
-          front_gif: other.showdown.front_default,
-          front_shiny: other?.["official-artwork"].front_shiny,
+          front_default: other?.["official-artwork"]?.front_default,
+          front_gif: other?.showdown?.front_default,
+          front_shiny: other?.["official-artwork"]?.front_shiny,
         },
       };
     } catch (error) {

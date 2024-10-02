@@ -65,4 +65,104 @@ describe("usePokemonDetails", () => {
 
     expect(result).toBeNull();
   });
+
+  it("deve formatar corretamente o order quando for menor que 100", async () => {
+    const mockPokemonData = {
+      id: 25,
+      name: "pikachu",
+      order: 35,
+      sprites: {
+        other: {
+          "official-artwork": {
+            front_default: "url-to-front-default",
+            front_shiny: "url-to-front-shiny",
+          },
+          showdown: {
+            front_default: "url-to-front-gif",
+          },
+        },
+      },
+      types: [{ type: { name: "electric" } }],
+      stats: [{ base_stat: 55, stat: { name: "hp" } }],
+    };
+
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockPokemonData),
+    } as Response);
+
+    const { getEachPokemon } = usePokemonDetails();
+    const result = await getEachPokemon("pikachu");
+
+    expect(result?.order).toBe("035");
+  });
+
+  it("deve formatar corretamente o order quando for maior ou igual a 1000", async () => {
+    const mockPokemonData = {
+      id: 1000,
+      name: "bigpokemon",
+      order: 1000,
+      sprites: {
+        other: {
+          "official-artwork": {
+            front_default: "url-to-front-default",
+            front_shiny: "url-to-front-shiny",
+          },
+          showdown: {
+            front_default: "url-to-front-gif",
+          },
+        },
+      },
+      types: [{ type: { name: "normal" } }],
+      stats: [{ base_stat: 100, stat: { name: "hp" } }],
+    };
+
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockPokemonData),
+    } as Response);
+
+    const { getEachPokemon } = usePokemonDetails();
+    const result = await getEachPokemon("bigpokemon");
+
+    expect(result?.order).toBe("1000");
+  });
+
+  it("deve lidar corretamente com sprites ausentes", async () => {
+    const mockPokemonData = {
+      id: 9999,
+      name: "missingsprites",
+      order: 9999,
+      sprites: {
+        other: {}
+      },
+      types: [{ type: { name: "unknown" } }],
+      stats: [{ base_stat: 50, stat: { name: "hp" } }],
+    };
+
+    vi.mocked(fetch).mockResolvedValueOnce({
+      json: () => Promise.resolve(mockPokemonData),
+    } as Response);
+
+    const { getEachPokemon } = usePokemonDetails();
+    const result = await getEachPokemon("missingsprites");
+
+    expect(result?.sprites).toEqual({
+      front_default: undefined,
+      front_gif: undefined,
+      front_shiny: undefined,
+    });
+  });
+
+  it("deve retornar null quando pokemonNameOrId for null", async () => {
+    const { getEachPokemon } = usePokemonDetails();
+    const result = await getEachPokemon(null as unknown as string);
+    expect(result).toBeNull();
+  });
+
+  
+  it("deve retornar null quando pokemonNameOrId for undefined", async () => {
+    const { getEachPokemon } = usePokemonDetails();
+    const result = await getEachPokemon(undefined as unknown as string);
+    expect(result).toBeNull();
+  });
+  
 });

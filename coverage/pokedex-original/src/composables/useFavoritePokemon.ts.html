@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -114,39 +114,39 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,40 +158,40 @@ import { ref, watch } from "vue";
 import { usePokemonDetails } from "@/api/usePokemonDetails";
 import { PokemonDetails } from "@/types";
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >useFavoritePokemon() {</span>
-  const favoritePokemons = <span class="cstat-no" title="statement not covered" >useLocalStorage&lt;string[]&gt;("favoritePokemons", []);</span>
+export function useFavoritePokemon() {
+  const favoritePokemons = useLocalStorage&lt;string[]&gt;("favoritePokemons", []);
 &nbsp;
-  const { getEachPokemon } = <span class="cstat-no" title="statement not covered" >usePokemonDetails();</span>
-  const pokemonFavoriteList = <span class="cstat-no" title="statement not covered" >ref&lt;PokemonDetails[]&gt;([]);</span>
+  const { getEachPokemon } = usePokemonDetails();
+  const pokemonFavoriteList = ref&lt;PokemonDetails[]&gt;([]);
 &nbsp;
   // Função para atualizar a lista de detalhes dos Pokémon favoritos
-  const updateFavoriteDetails = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async () =&gt; {</span></span>
-    const detailsPromises = <span class="cstat-no" title="statement not covered" >favoritePokemons.value.map(<span class="fstat-no" title="function not covered" >(n</span>ame) =&gt;</span>
-<span class="cstat-no" title="statement not covered" >      getEachPokemon(name)</span>
+  const updateFavoriteDetails = async () =&gt; {
+    const detailsPromises = favoritePokemons.value.map((name) =&gt;
+      getEachPokemon(name)
     );
-<span class="cstat-no" title="statement not covered" >    pokemonFavoriteList.value = (await Promise.all(detailsPromises)).filter(</span>
-<span class="fstat-no" title="function not covered" >      (p</span>okemon): pokemon is PokemonDetails =&gt; <span class="cstat-no" title="statement not covered" >pokemon !== null</span>
+    pokemonFavoriteList.value = (await Promise.all(detailsPromises)).filter(
+      (pokemon): pokemon is PokemonDetails =&gt; pokemon !== null
     );
   };
 &nbsp;
   // Observa mudanças em favoritePokemons e atualiza os detalhes
-<span class="cstat-no" title="statement not covered" >  watch(favoritePokemons, updateFavoriteDetails, { immediate: true });</span>
+  watch(favoritePokemons, updateFavoriteDetails, { immediate: true });
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >toggleFavorite(p</span>okemonName: string) {
-<span class="cstat-no" title="statement not covered" >    if (isFavorite(pokemonName)) {</span>
-<span class="cstat-no" title="statement not covered" >      favoritePokemons.value = favoritePokemons.value.filter(</span>
-<span class="fstat-no" title="function not covered" >        (p</span>) =&gt; <span class="cstat-no" title="statement not covered" >p !== pokemonName</span>
+  function toggleFavorite(pokemonName: string) {
+    if (isFavorite(pokemonName)) {
+      favoritePokemons.value = favoritePokemons.value.filter(
+        (p) =&gt; p !== pokemonName
       );
     } else {
-<span class="cstat-no" title="statement not covered" >      favoritePokemons.value.push(pokemonName);</span>
+      favoritePokemons.value.push(pokemonName);
     }
   }
 &nbsp;
-  function <span class="fstat-no" title="function not covered" >isFavorite(p</span>okemonName: string) {
-<span class="cstat-no" title="statement not covered" >    return favoritePokemons.value.includes(pokemonName);</span>
+  function isFavorite(pokemonName: string) {
+    return favoritePokemons.value.includes(pokemonName);
   }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return {</span>
+  return {
     favoritePokemons,
     pokemonFavoriteList,
     toggleFavorite,
@@ -205,7 +205,7 @@ export function <span class="fstat-no" title="function not covered" >useFavorite
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-02T10:24:06.622Z
+                at 2024-10-02T12:08:38.675Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
