@@ -10,7 +10,18 @@
         </div>
 
         <section class="relative z-10 min-h-screen py-4 px-4 flex items-center justify-center">
-            <div v-if="pokemonDetails" class="w-full max-w-7xl bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6">
+            <div v-if="pokemonDetails"
+                class="relative w-full max-w-7xl bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6 overflow-hidden">
+                <!-- Novo elemento para o efeito de brilho -->
+                <div :class="`absolute w-96 h-96 rounded-full blur-[500px] bg-${primaryTypeColor}`"></div>
+
+                <!-- Adicione o botão de voltar aqui, dentro do card -->
+                <button @click="$router.push('/')"
+                    class="absolute top-4 left-4 px-3 py-1 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition-colors text-sm flex gap-2 items-center">
+                    <Icon icon="material-symbols:arrow-back-rounded" />
+                    Return
+                </button>
+
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
                     <!-- Coluna da esquerda -->
                     <div class="flex-shrink-0 w-1/3">
@@ -31,9 +42,11 @@
                                 class="bg-white/5 rounded-lg p-3">
                                 <p class="text-sm font-medium capitalize mb-1">{{ stat.stat.name }}</p>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-lg font-bold w-8">{{ animatedStats[stat.stat.name] }}</span>
-                                    <Progress :model-value="animatedStats[stat.stat.name]" :max="200"
-                                        class="flex-grow" />
+                                    <span class="text-lg font-bold w-8">{{ animatedStats[stat.stat.name] ?
+                                        animatedStats[stat.stat.name] : stat.base_stat }}</span>
+                                    <Progress
+                                        :model-value="animatedStats[stat.stat.name] ? animatedStats[stat.stat.name] : stat.base_stat"
+                                        :max="200" class="flex-grow" />
                                 </div>
                             </div>
                         </div>
@@ -99,25 +112,22 @@
                         </div>
                     </div>
                 </div>
-
-                <button @click="$router.push('/')"
-                    class="mt-6 px-4 py-2 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition-colors">
-                    Voltar para a lista
-                </button>
             </div>
         </section>
     </main>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, reactive, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { usePokemonDetails } from '@/api/usePokemonDetails';
 import { PokemonDetails, PokemonSpeciesEvolution } from '@/types';
 import Progress from '@/components/ui/progress/Progress.vue';
 import Badge from '@/components/Badge.vue';
 import { useDark } from '@vueuse/core';
-import { usePokemonEvolution } from '@/composables/usePokemonEvolution';
+import { usePokemonEvolution } from '@/api/usePokemonEvolution';
+import { typeColors } from '@/utils/typeColors';
+import { Icon } from '@iconify/vue/dist/iconify.js';
 
 const isDark = useDark();
 const { getEachPokemon } = usePokemonDetails();
@@ -127,16 +137,21 @@ const route = useRoute();
 
 const pokemonDetails = ref<PokemonDetails | null>(null);
 const evolutions = ref<PokemonSpeciesEvolution | null>(null);
-const animatedStats = reactive<Record<string, number>>({});
+const animatedStats = ref<Record<string, number>>({});
 
+const primaryTypeColor = computed(() => {
+    const primaryType = pokemonDetails.value?.types[0].type.name;
+    return typeColors[primaryType as keyof typeof typeColors];
+})
 const fetchPokemonInfos = async () => {
     pokemonDetails.value = await getEachPokemon(route.params.id as string | number);
 
     evolutions.value = await getPokemonEvolutions(pokemonDetails.value?.name)
 
     if (pokemonDetails.value) {
+        animatedStats.value = {};
         pokemonDetails.value.stats.forEach(stat => {
-            animatedStats[stat.stat.name] = 0;
+            animatedStats.value[stat.stat.name] = 0;
             animateValue(stat.stat.name, stat.base_stat);
         });
     }
@@ -154,7 +169,9 @@ function animateValue(statName: string, targetValue: number, duration: number = 
     function step(timestamp: number) {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
-        animatedStats[statName] = Math.floor(progress * targetValue);
+        if (animatedStats.value) {
+            animatedStats.value[statName] = Math.floor(progress * targetValue);
+        }
 
         if (progress < 1) {
             requestAnimationFrame(step);

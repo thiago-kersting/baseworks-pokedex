@@ -19,7 +19,10 @@ export function usePokemonDetails() {
         name,
         types,
         stats,
-        order: order.toString().padStart(3, "0"),
+        order:
+          order.toString().length >= 4
+            ? order.toString()
+            : order.toString().padStart(3, "0"),
         sprites: {
           front_default: other?.["official-artwork"].front_default,
           front_gif: other.showdown.front_default,
