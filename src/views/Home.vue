@@ -21,7 +21,7 @@
         <p class="font-light text-xl">{{ t('madeBy', { name: 'Thiago Kersting Puls' } ) }}</p>
         <button @click="toggleDark()" class="px-4 py-2 rounded-full bg-purple-700">
           <span class="text-white" v-if="isDark">{{ t('switchColor.dark') }}</span>
-          <span class="text-white" v-else>{{ t('switchColor.Light') }}</span>
+          <span class="text-white" v-else>{{ t('switchColor.light') }}</span>
         </button>
       </div>
       

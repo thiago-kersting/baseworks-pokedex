@@ -5,7 +5,7 @@
     "madeBy": "Made by {name}",
     "switchColor": {
         "dark": "Dark Mode",
-        "Light": "Light Mode"
+        "light": "Light Mode"
     },
     "inputSearch": {
         "label": "Search by:",
