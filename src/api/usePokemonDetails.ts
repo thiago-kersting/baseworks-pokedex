@@ -12,6 +12,9 @@ export function usePokemonDetails() {
       const response = await fetch(
         `https://pokeapi.co/api/v2/pokemon/${pokemonNameOrId}`
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const { name, order, sprites, types, id, stats } = await response.json();
       const other = sprites?.other;
       return {
@@ -32,7 +35,7 @@ export function usePokemonDetails() {
     } catch (error) {
       console.error(
         `Erro ao buscar detalhes do Pokémon ${pokemonNameOrId}:`,
-        error
+        error instanceof Error ? error.message : String(error)
       );
       return null;
     }

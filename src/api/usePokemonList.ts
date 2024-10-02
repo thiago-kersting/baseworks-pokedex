@@ -16,11 +16,14 @@ export function usePokemonList() {
           (currentPage.value - 1) * pageSize
         }&limit=${pageSize}`
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data: PokemonListResponse = await response.json();
       currentPage.value++;
       return data.results;
     } catch (error) {
-      console.error("Erro ao buscar os Pokémon:", error);
+      console.error("Erro ao buscar os Pokémon:", error instanceof Error ? error.message : String(error));
       return [];
     } finally {
       isLoading.value = false;
