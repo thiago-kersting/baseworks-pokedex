@@ -24,7 +24,7 @@
 
                 <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
                     <!-- Coluna da esquerda -->
-                    <div class="flex-shrink-0 w-1/3">
+                    <div class="flex flex-col items-center">
                         <img :src="pokemonDetails.sprites.front_default" :alt="pokemonDetails.name"
                             class="w-full h-auto object-contain mb-4">
                         <h1 class="text-3xl font-bold capitalize mb-2 text-center">{{ pokemonDetails.name }}</h1>
@@ -77,7 +77,7 @@
                             <h3 class="text-xl font-semibold mb-2 capitalize">{{ t('detailsPage.evolutions') }}</h3>
                             <div class="flex items-center">
                                 <div v-if="evolutions.firstEvolution" class="text-center">
-                                    <router-link :to="`/details/${evolutions.firstEvolution.id}`">
+                                    <router-link :to="`/details/${evolutions.firstEvolution.id}`" @click="scrollToTop">
                                         <img :src="evolutions.firstEvolution.sprites.front_default"
                                             :alt="evolutions.firstEvolution.name"
                                             class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
@@ -90,7 +90,7 @@
                                             evolutions.firstEvolutionLevel }}</p>
                                         <span class="text-2xl">→</span>
                                     </div>
-                                    <router-link :to="`/details/${evolutions.secondEvolution.id}`" class="text-center">
+                                    <router-link :to="`/details/${evolutions.secondEvolution.id}`" class="text-center" @click="scrollToTop">
                                         <img :src="evolutions.secondEvolution.sprites.front_default"
                                             :alt="evolutions.secondEvolution.name"
                                             class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
@@ -103,7 +103,7 @@
                                             evolutions.secondEvolutionLevel }}</p>
                                         <span class="text-2xl">→</span>
                                     </div>
-                                    <router-link :to="`/details/${evolutions.thirdEvolution.id}`" class="text-center">
+                                    <router-link :to="`/details/${evolutions.thirdEvolution.id}`" class="text-center" @click="scrollToTop">
                                         <img :src="evolutions.thirdEvolution.sprites.front_default"
                                             :alt="evolutions.thirdEvolution.name"
                                             class="w-24 h-24 object-contain cursor-pointer hover:opacity-80 transition-opacity">
@@ -186,4 +186,11 @@ function animateValue(statName: string, targetValue: number, duration: number = 
 
     requestAnimationFrame(step);
 }
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+};
 </script>
