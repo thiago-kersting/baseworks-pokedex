@@ -20,7 +20,10 @@ export function usePokemonByType() {
             }));
 
             return simplifiedPokemonList;
-        } finally {
+        } catch (err) {
+            console.error(err)
+        } 
+        finally {
             isLoading.value = false;
         }
     }

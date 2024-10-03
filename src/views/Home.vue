@@ -57,7 +57,7 @@
                     <Icon v-else="showFavorites" icon="material-symbols-light:star" class="text-2xl" />
                   </button>
                 </TooltipTrigger>
-                <TooltipContent class="dark:bg-zinc-800 bg-zinc-200">
+                <TooltipContent class="dark:bg-zinc-800 bg-zinc-200 dark:!text-white !text-zinc-900">
                   <p v-if="!showFavorites">{{ t('favPokemons.tooltipEnter') }}</p>
                   <p v-else>{{ t('favPokemons.tooltipLeave') }}</p>
                 </TooltipContent>
@@ -111,12 +111,7 @@
     </section>
 
     <!-- Botão flutuante para voltar ao topo -->
-    <button 
-      @click="scrollToTop" 
-      class="fixed z-40 bottom-8 right-8 bg-purple-700 rounded-full p-3 shadow-lg text-white dark:!text-white hover:bg-purple-800 transition-colors duration-300"
-    >
-      <Icon icon="mdi:arrow-up" class="text-2xl text-white dark:!text-white" />
-    </button>
+    <ButtonScrollTop @click="scrollToTop" />
 
   </main>
 
@@ -149,6 +144,7 @@ function toggleLocale() {
 
 import { useComparePokemons } from '@/composables/useComparePokemons';
 import PokemonComparisonCard from '@/components/PokemonComparisonCard.vue';
+import ButtonScrollTop from '@/components/ButtonScrollTop.vue';
 
 const { pokemonCompareList } = useComparePokemons();
 

@@ -25,6 +25,7 @@ describe("usePokemonList", () => {
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonList),
     } as Response);
 
@@ -45,6 +46,7 @@ describe("usePokemonList", () => {
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonList),
     } as Response);
 
@@ -55,7 +57,8 @@ describe("usePokemonList", () => {
   });
 
   it("deve retornar uma lista vazia e logar o erro quando ocorrer um erro na requisição", async () => {
-    vi.mocked(fetch).mockRejectedValueOnce(new Error("Erro na API"));
+    const errorMessage = "Erro na API";
+    vi.mocked(fetch).mockRejectedValueOnce(new Error(errorMessage));
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     const { getListPokemons } = usePokemonList();
@@ -64,7 +67,7 @@ describe("usePokemonList", () => {
     expect(result).toEqual([]);
     expect(consoleSpy).toHaveBeenCalledWith(
       "Erro ao buscar os Pokémon:",
-      expect.any(Error)
+      errorMessage // Verifica se a mensagem do erro é a esperada
     );
   });
 
@@ -85,6 +88,7 @@ describe("usePokemonList", () => {
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonList),
     } as Response);
 

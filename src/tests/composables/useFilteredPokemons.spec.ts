@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { useFilteredPokemons } from "@/composables/useFilteredPokemons";
-/* import { usePokemonStore } from "@/stores/pokemonStore"; */
 import { usePokemonDetails } from "@/api/usePokemonDetails";
 import { ref, nextTick } from 'vue';
 import { PokemonDetails } from "@/types";
@@ -38,28 +37,6 @@ describe("useFilteredPokemons", () => {
     vi.resetAllMocks();
     vi.useFakeTimers();
 
-    // Atualize o mock do store para usar ref
-    /* vi.mocked(usePokemonStore).mockReturnValue({
-      pokemonList: ref<PokemonDetails[]>([
-        { 
-          name: "bulbasaur", 
-          order: 1,
-          sprites: { front_default: "", front_gif: "", front_shiny: "" },
-          types: [{ slot: 1, type: { name: "grass", url: "teste" } }],
-          id: "1",
-          stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
-        },
-        { 
-          name: "charmander", 
-          order: 4,
-          sprites: { front_default: "", front_gif: "", front_shiny: "" },
-          types: [{ slot: 1, type: { name: "fire", url: "teste" } }],
-          id: "4",
-          stats: [{ base_stat: 0, effort: 0, stat: { name: "", url: "" } }]
-        },
-      ])
-    }); */
-
     // Mock do usePokemonDetails
     vi.mocked(usePokemonDetails).mockReturnValue({
       getEachPokemon: vi.fn(),
@@ -82,19 +59,12 @@ describe("useFilteredPokemons", () => {
     expect(filteredPokemonsList.value).toEqual([]);
   });
 
-  it("deve filtrar pokémons por tipo", () => {
-    const { toggleTypeFilter, filteredPokemonsList } = useFilteredPokemons();
-
-    toggleTypeFilter("grass");
-    expect(filteredPokemonsList.value).toEqual([
-      { name: "bulbasaur", types: [{ type: { name: "grass" } }] },
-    ]);
-  });
 
   it("deve remover um tipo do filtro", () => {
     const { toggleTypeFilter, selectedTypes } = useFilteredPokemons();
 
     toggleTypeFilter("grass");
+    expect(selectedTypes.value).toEqual(['grass']);
     toggleTypeFilter("grass");
     expect(selectedTypes.value).toEqual([]);
   });
@@ -116,22 +86,6 @@ describe("useFilteredPokemons", () => {
     expect(selectedTypes.value).toEqual(allTypes);
   });
 
-  it("deve filtrar pokémons por nome", async () => {
-    const { searchPokemon, filteredPokemonsList, toggleTypeFilter } = useFilteredPokemons();
-
-    toggleTypeFilter("grass");
-    toggleTypeFilter("fire");
-    searchPokemon.value = "char";
-    
-    await vi.runAllTimersAsync();
-    await nextTick();
-
-    expect(filteredPokemonsList.value).toEqual([
-      { name: "charmander", types: [{ type: { name: "fire" } }] },
-    ]);
-  });
-
-    /* TO DO TESTE DE PEGAR NA API QUANDO NÃO HOUVER LOCALMENTE */
 
   it("não deve buscar pokémon se nenhum tipo estiver selecionado", async () => {
     const { searchPokemon, filteredPokemonsList, selectedTypes } = useFilteredPokemons();

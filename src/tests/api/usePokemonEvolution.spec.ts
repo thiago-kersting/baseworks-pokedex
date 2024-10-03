@@ -46,9 +46,11 @@ describe("usePokemonEvolution", () => {
     // Mock das chamadas fetch
     vi.mocked(fetch)
       .mockResolvedValueOnce({
+        ok: true,
         json: () => Promise.resolve(mockSpeciesResponse),
       } as Response)
       .mockResolvedValueOnce({
+        ok: true,
         json: () => Promise.resolve(mockEvolutionChainResponse),
       } as Response);
 
@@ -87,9 +89,11 @@ describe("usePokemonEvolution", () => {
 
     vi.mocked(fetch)
       .mockResolvedValueOnce({
+        ok: true,
         json: () => Promise.resolve(mockSpeciesResponse),
       } as Response)
       .mockResolvedValueOnce({
+        ok: true,
         json: () => Promise.resolve(mockEvolutionChainResponse),
       } as Response);
 
@@ -112,13 +116,24 @@ describe("usePokemonEvolution", () => {
     });
   });
 
-  it("deve lidar com erros na chamada da API", async () => {
+  it("deve retornar null quando ocorrer um erro na chamada da API", async () => {
     vi.mocked(fetch).mockRejectedValueOnce(new Error("Erro na API"));
 
     const { getPokemonEvolutions } = usePokemonEvolution();
+    const result = await getPokemonEvolutions("error-pokemon");
 
-    await expect(getPokemonEvolutions("error-pokemon")).rejects.toThrow(
-      "Erro na API"
-    );
+    expect(result).toBeNull();
+  });
+
+  it("deve lidar corretamente com respostas de API inválidas", async () => {
+    vi.mocked(fetch).mockResolvedValueOnce({
+      ok: false,
+      status: 404,
+    } as Response);
+
+    const { getPokemonEvolutions } = usePokemonEvolution();
+    const result = await getPokemonEvolutions("invalid-pokemon");
+
+    expect(result).toBeNull();
   });
 });

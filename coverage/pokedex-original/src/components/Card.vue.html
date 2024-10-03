@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
@@ -102,13 +102,31 @@
 <a name='L37'></a><a href='#L37'>37</a>
 <a name='L38'></a><a href='#L38'>38</a>
 <a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -135,6 +153,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -147,11 +167,19 @@
 <span class="cstat-no" title="statement not covered" >            class="group hover:-translate-y-1 duration-700 cursor-pointer transition-all flex flex-col py-4 px-6 rounded-2xl w-72 dark:bg-white/5 bg-zinc-500/5 hover:bg-zinc-500/10 hover:dark:bg-white/10 backdrop-blur-md border border-white/20 hover:border-purple-400 shadow-lg"&gt;</span>
             &lt;div <span class="cstat-no" title="statement not covered" >class="flex justify-between items-center mb-2"&gt;</span>
                 &lt;p <span class="cstat-no" title="statement not covered" >class="font-light"&gt;#</span>{{ pokemon.order }}&lt;/p&gt;
-                &lt;button @click.stop.prevent="<span class="cstat-no" title="statement not covered" >toggleFavorite(pokemon.name)"&gt;</span>
-                    &lt;Icon v-show="!isFavorite(pokemon.name)" icon="material-symbols-light:star-outline"
-                        class="text-2xl" /&gt;
-                    &lt;Icon v-show="isFavorite(pokemon.name)" icon="material-symbols-light:star" class="text-2xl" /&gt;
-                &lt;/button&gt;
+                &lt;div <span class="cstat-no" title="statement not covered" >class="flex items-center gap-2"&gt;</span>
+                    &lt;button @click.stop.prevent="<span class="cstat-no" title="statement not covered" >isPokemonCompare(pokemon.name) ? removePokemon(pokemon.name) : addPokemon(pokemon.name)"&gt;</span>
+                        &lt;Icon v-if="isPokemonCompare(pokemon.name)" icon="icon-park-solid:imbalance" class="text-2xl" /&gt;
+                        &lt;Icon v-else :icon="pokemonCompareList.length &lt; 2 ?'icon-park-outline:imbalance' : ''" class="text-2xl" /&gt;
+                    &lt;/button&gt;
+&nbsp;
+                    &lt;button @click.stop.prevent="<span class="cstat-no" title="statement not covered" >toggleFavorite(pokemon.name)"&gt;</span>
+                        &lt;Icon v-show="!isFavorite(pokemon.name)" icon="material-symbols-light:star-outline"
+                            class="text-2xl" /&gt;
+                        &lt;Icon v-show="isFavorite(pokemon.name)" icon="material-symbols-light:star" class="text-2xl" /&gt;
+                    &lt;/button&gt;
+&nbsp;
+                &lt;/div&gt;
             &lt;/div&gt;
             &lt;div <span class="cstat-no" title="statement not covered" >class="flex justify-center"&gt;</span>
                 &lt;img :src="pokemon.sprites.front_default" alt="pokemon"
@@ -171,9 +199,11 @@
 &lt;script lang="ts" setup&gt;
 import { Icon } from "@iconify/vue"
 import { PokemonDetails } from "@/types";
-import Badge from "./Badge.vue";
+import Badge from "./BadgeType.vue";
 import { useFavoritePokemon } from "@/composables/useFavoritePokemon";
+import { useComparePokemons } from "@/composables/useComparePokemons";
 &nbsp;
+const { pokemonCompareList, addPokemon, isPokemonCompare, removePokemon } = <span class="cstat-no" title="statement not covered" >useComparePokemons();</span>
 const { isFavorite, toggleFavorite } = <span class="cstat-no" title="statement not covered" >useFavoritePokemon()</span>
 &nbsp;
 defineProps&lt;{
@@ -187,7 +217,7 @@ defineProps&lt;{
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-10-02T12:08:38.675Z
+                at 2024-10-03T18:58:45.268Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

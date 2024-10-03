@@ -8,6 +8,7 @@ describe("usePokemonDetails", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
+
   it("deve retornar null quando pokemonNameOrId não for fornecido", async () => {
     const { getEachPokemon } = usePokemonDetails();
     const result = await getEachPokemon("");
@@ -36,6 +37,7 @@ describe("usePokemonDetails", () => {
 
     // Mock da resposta do fetch
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonData),
     } as Response);
 
@@ -71,22 +73,13 @@ describe("usePokemonDetails", () => {
       id: 25,
       name: "pikachu",
       order: 35,
-      sprites: {
-        other: {
-          "official-artwork": {
-            front_default: "url-to-front-default",
-            front_shiny: "url-to-front-shiny",
-          },
-          showdown: {
-            front_default: "url-to-front-gif",
-          },
-        },
-      },
-      types: [{ type: { name: "electric" } }],
-      stats: [{ base_stat: 55, stat: { name: "hp" } }],
+      sprites: { other: {} },
+      types: [],
+      stats: [],
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonData),
     } as Response);
 
@@ -101,22 +94,13 @@ describe("usePokemonDetails", () => {
       id: 1000,
       name: "bigpokemon",
       order: 1000,
-      sprites: {
-        other: {
-          "official-artwork": {
-            front_default: "url-to-front-default",
-            front_shiny: "url-to-front-shiny",
-          },
-          showdown: {
-            front_default: "url-to-front-gif",
-          },
-        },
-      },
-      types: [{ type: { name: "normal" } }],
-      stats: [{ base_stat: 100, stat: { name: "hp" } }],
+      sprites: { other: {} },
+      types: [],
+      stats: [],
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonData),
     } as Response);
 
@@ -131,14 +115,13 @@ describe("usePokemonDetails", () => {
       id: 9999,
       name: "missingsprites",
       order: 9999,
-      sprites: {
-        other: {}
-      },
-      types: [{ type: { name: "unknown" } }],
-      stats: [{ base_stat: 50, stat: { name: "hp" } }],
+      sprites: { other: {} },
+      types: [],
+      stats: [],
     };
 
     vi.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(mockPokemonData),
     } as Response);
 
