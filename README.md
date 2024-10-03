@@ -1,15 +1,15 @@
 # Pokédex
 
 ## Descrição do Projeto
-Este projeto é uma Pokédex interativa desenvolvida com Vite, Vue 3, TypeScript e Pinia. O objetivo é fornecer uma interface amigável para visualizar informações sobre Pokémon.
+Este projeto é uma Pokédex interativa desenvolvida com Vite, Vue 3, TypeScript e Pinia. O objetivo é fornecer uma interface amigável para visualizar informações sobre Pokémons.
 
 ## Funcionalidades
-- **Listagem de Pokémon**: Visualize uma lista de Pokémon com informações básicas.
-- **Detalhes do Pokémon**: Clique em um Pokémon para ver detalhes adicionais, variações, estatísticas e evoluções (podem ser clicadas para navegação entre pokémons).
-- **Pesquisa**: Pesquise Pokémon por nome ou id.
-- **Filtro por Tipo**: Filtre Pokémon por tipo para facilitar a busca.
-- **Comparar Pokémon**: Selecione dois Pokémon usando o ícone de balança nos cards, irá aparecer um botão flutuante abaixo, ao apertar sera possivel comparar suas estatísticas lado a lado, facilitando a análise de suas habilidades e atributos.
-- **Favoritar Pokémon**: Adicione Pokémon aos seus favoritos clicando na estrela em seu card. Os Pokémon favoritos ficarão disponíveis na seção de filtros, mesmo após você fechar a página, permitindo acesso rápido e fácil a eles sempre que precisar!
+- **Listagem de Pokémons**: Visualize uma lista de Pokémons com informações básicas.
+- **Detalhes do Pokémons**: Clique em um Pokémon para ver detalhes adicionais, variações, estatísticas e evoluções (podem ser clicadas para navegação entre pokémons).
+- **Pesquisa**: Pesquise Pokémons por nome ou id.
+- **Filtro por Tipo**: Filtre Pokémons por tipo para facilitar a busca.
+- **Comparar Pokémons**: Selecione dois Pokémons usando o ícone de balança nos cards, irá aparecer um botão flutuante abaixo, ao apertar sera possivel comparar suas estatísticas lado a lado, facilitando a análise de suas habilidades e atributos.
+- **Favoritar Pokémons**: Adicione Pokémons aos seus favoritos clicando na estrela em seu card. Os Pokémons favoritos ficarão disponíveis na seção de filtros, mesmo após você fechar a página, permitindo acesso rápido e fácil a eles sempre que precisar!
 
 ## Tecnologias Utilizadas
 - **Vite**
@@ -22,7 +22,7 @@ Este projeto é uma Pokédex interativa desenvolvida com Vite, Vue 3, TypeScript
 ## Decisões Técnicas
 ### Pinia Store - Gerenciamento de estado
 - Optei utilzar o Pinia para gerenciamento de estado por ser o recomendado na documentação do VueJS, e também por certa familiaridade com essa tecnologia.
-- Dentro da minha store criei um cache para os pokemons já carregados, para que ao trocar os filtros, não houvessem chamadas a api desnecessárias e nem duplicatas.
+- Dentro da minha store criei um cache para os pokémons já carregados, para que ao trocar os filtros, não houvessem chamadas a api desnecessárias e nem duplicatas.
 - Também, garanti que a páginação fosse feita tanto na busca de pokémons por tipo, quanto na busca de pokémons gerais, utilizando as composables.
 
 ### Composables - Lógica de negócio

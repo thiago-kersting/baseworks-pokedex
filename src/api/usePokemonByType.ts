@@ -1,4 +1,9 @@
+import { PokemonListItem } from '@/types';
 import { ref } from 'vue';
+
+interface pokemonByTypeApi {
+    pokemon: PokemonListItem
+}
 
 export function usePokemonByType() {
     const isLoading = ref(false);
@@ -14,7 +19,7 @@ export function usePokemonByType() {
             const paginatedPokemon = pokemon.slice(offset, offset + limit);
 
             // Transformar o array de pokemon para o formato desejado
-            const simplifiedPokemonList = paginatedPokemon.map((item: any) => ({
+            const simplifiedPokemonList = paginatedPokemon.map((item: pokemonByTypeApi) => ({
                 name: item.pokemon.name,
                 url: item.pokemon.url
             }));
