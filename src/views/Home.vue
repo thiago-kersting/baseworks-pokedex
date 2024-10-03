@@ -217,7 +217,7 @@ watch(() => selectedTypes.value, (newTypes: string[]) => {
 useInfiniteScroll(
   feed, // O elemento no qual o scroll será detectado
   () => {
-    if (!isLoading.value && selectedTypes.value.length === 18 && !showFavorites.value) {
+    if (!isLoading.value && selectedTypes.value.length === 18 && !showFavorites.value && !searchPokemon.value) {
       getListPokemons()  // Carregar mais Pokémon ao atingir o final da página
     }
   },
