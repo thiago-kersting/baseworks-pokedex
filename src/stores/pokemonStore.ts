@@ -28,53 +28,72 @@ export const usePokemonStore = defineStore(
       isLoading.value = true;
       try {
         const newPokemonList = await fetchPokemonList();
-        for (const pokemon of newPokemonList) {
-          if (!pokemonCache.has(pokemon.name)) {
-            const pokemonDetails = await getEachPokemon(pokemon.name);
-            if (pokemonDetails) {
-              pokemonCache.set(pokemon.name, pokemonDetails);
-              pokemonList.value.push(pokemonDetails);
-            }
-          } else {
-            if (!pokemonList.value.some(poke => poke.name === pokemon.name)) {
-              pokemonList.value.push(pokemonCache.get(pokemon.name)!);
-            }
+        const uncachedPokemons = newPokemonList.filter(pokemon => !pokemonCache.has(pokemon.name));
+    
+        const newPokemonDetails = await Promise.all(
+          uncachedPokemons.map(pokemon => getEachPokemon(pokemon.name))
+        );
+    
+        newPokemonDetails.forEach(pokemonDetails => {
+          if (pokemonDetails) {
+            pokemonCache.set(pokemonDetails.name, pokemonDetails);
           }
-        }
+        });
+    
+        // Atualize a lista sem duplicatas
+        const loadedPokemons = newPokemonList
+          .map(pokemon => pokemonCache.get(pokemon.name)!)
+          .filter(pokemon => !pokemonList.value.some(p => p.name === pokemon.name));
+    
+        // Adicione os novos pokémons à lista sem duplicá-los
+        pokemonList.value = [...pokemonList.value, ...loadedPokemons];
         pokemonList.value.sort((a, b) => a.order - b.order);
       } finally {
         isLoading.value = false;
       }
     }
+    
 
     async function getListPokemonsByType(types: string[]) {
-      currentPage.value = 1;
       isLoading.value = true;
       try {
         const pokemonSet = new Set<PokemonDetails>();
-        
+    
         await Promise.all(types.map(async (type) => {
           const pokemonOfType = await fetchByType(type);
-          for (const pokemon of pokemonOfType) {
-            if (!pokemonCache.has(pokemon.name)) {
-              const pokemonDetails = await getEachPokemon(pokemon.name);
-              if (pokemonDetails) {
-                pokemonCache.set(pokemon.name, pokemonDetails);
-                pokemonSet.add(pokemonDetails);
-              }
-            } else {
-              if (!pokemonList.value.some(poke => poke.name === pokemon.name)) {
-                pokemonList.value.push(pokemonCache.get(pokemon.name)!);
-              }
+          
+          const uncachedPokemons = pokemonOfType.filter(pokemon => !pokemonCache.has(pokemon.name));
+    
+          const newPokemonDetails = await Promise.all(
+            uncachedPokemons.map(pokemon => getEachPokemon(pokemon.name))
+          );
+    
+          newPokemonDetails.forEach(pokemonDetails => {
+            if (pokemonDetails) {
+              pokemonCache.set(pokemonDetails.name, pokemonDetails);
             }
-          }
+          });
+    
+          pokemonOfType.forEach(pokemon => {
+            const cachedPokemon = pokemonCache.get(pokemon.name);
+            if (cachedPokemon) {
+              pokemonSet.add(cachedPokemon);
+            }
+          });
         }));
-
-        pokemonList.value = Array.from(pokemonSet).sort((a, b) => a.order - b.order);
+    
+        // Atualize a lista sem duplicatas
+        const newPokemonList = Array.from(pokemonSet).filter(
+          pokemon => !pokemonList.value.some(p => p.name === pokemon.name)
+        );
+    
+        // Adicione os novos pokémons à lista sem duplicá-los
+        pokemonList.value = [...pokemonList.value, ...newPokemonList];
+        pokemonList.value.sort((a, b) => a.order - b.order);
       } finally {
         isLoading.value = false;
       }
-    }
+    }    
 
     return {
       pokemonList,
