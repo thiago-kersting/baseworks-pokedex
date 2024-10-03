@@ -124,6 +124,7 @@ import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
 import Card from '@/components/Card.vue';
 import { Icon } from '@iconify/vue/dist/iconify.js';
+import ButtonScrollTop from '@/components/ButtonScrollTop.vue';
 import Badge from '@/components/BadgeType.vue';
 import { useFilteredPokemons } from '@/composables/useFilteredPokemons';
 import { useFavoritePokemon } from '@/composables/useFavoritePokemon';
@@ -144,7 +145,6 @@ function toggleLocale() {
 
 import { useComparePokemons } from '@/composables/useComparePokemons';
 import PokemonComparisonCard from '@/components/PokemonComparisonCard.vue';
-import ButtonScrollTop from '@/components/ButtonScrollTop.vue';
 
 const { pokemonCompareList } = useComparePokemons();
 
