@@ -110,12 +110,20 @@
       </section>
     </section>
 
+    <!-- Botão flutuante para voltar ao topo -->
+    <button 
+      @click="scrollToTop" 
+      class="fixed z-50 bottom-8 right-8 bg-purple-700 text-white rounded-full p-3 shadow-lg hover:bg-purple-800 transition-colors duration-300"
+    >
+      <Icon icon="mdi:arrow-up" class="text-2xl" />
+    </button>
+
   </main>
 
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { usePokemonStore } from '@/stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
@@ -206,25 +214,35 @@ const selectAllTypesHandler = () => {
   selectAllTypes(typesFilter)
 }
 
-// Adicione este watch para observar mudanças em selectedTypes
-watch(() => selectedTypes.value, (newTypes: string[]) => {
-  if (newTypes.length > 0 && newTypes.length < 18) {
-    getListPokemonsByType(newTypes)
-  }
-}, { deep: true });
-
-// Configuração do Infinite Scroll
 useInfiniteScroll(
-  feed, // O elemento no qual o scroll será detectado
+  feed,
   () => {
-    if (!isLoading.value && selectedTypes.value.length === 18 && !showFavorites.value && !searchPokemon.value) {
-      getListPokemons()  // Carregar mais Pokémon ao atingir o final da página
+    if (!isLoading.value && selectedTypes.value.length > 0 && selectedTypes.value.length < 18 && !showFavorites.value && !searchPokemon.value) {
+      getListPokemonsByType(selectedTypes.value);  // Carregar mais Pokémons por tipo
+    } else if (!isLoading.value && selectedTypes.value.length === 18 && !showFavorites.value && !searchPokemon.value) {
+      getListPokemons();  // Carregar mais Pokémons para todos os tipos
     }
   },
-  {
-    distance: 100,  // Distância do fim do scroll (em pixels) para disparar o carregamento
-  }
-)
+  { distance: 100 }
+);
+
+const showScrollTopButton = ref(false)
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const checkScroll = () => {
+  showScrollTopButton.value = window.scrollY > 500
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', checkScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkScroll)
+})
 </script>
 
 <style scoped></style>
