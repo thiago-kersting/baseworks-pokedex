@@ -67,7 +67,7 @@ export function useFilteredPokemons() {
       }
     }
 
-    return filtered;
+    return filtered.sort((a, b) => a.order - b.order);
   });
 
   const toggleTypeFilter = (type: string) => {

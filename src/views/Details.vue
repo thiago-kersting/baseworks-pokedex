@@ -17,8 +17,8 @@
 
                 <!-- Adicione o botão de voltar aqui, dentro do card -->
                 <button @click="$router.push('/')"
-                    class="absolute top-4 left-4 px-3 py-1 bg-purple-700 text-white rounded-full hover:bg-purple-600 transition-colors text-sm flex gap-2 items-center capitalize">
-                    <Icon icon="material-symbols:arrow-back-rounded" class="text-white" />
+                    class="absolute top-4 left-4 px-3 py-1 bg-purple-700 text-white dark:text-white rounded-full hover:bg-purple-600 transition-colors text-sm flex gap-2 items-center capitalize">
+                    <Icon icon="fluent:arrow-left-32-filled" class="text-white dark:!text-white" style="color: white" />
                     {{ t('return') }}
                 </button>
 
