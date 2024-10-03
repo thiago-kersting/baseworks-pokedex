@@ -19,7 +19,7 @@
         </button>
         <h1 class="text-6xl font-semibold mt-2">{{ t('title') }}</h1>
         <p class="font-light text-xl">{{ t('madeBy', { name: 'Thiago Kersting Puls' } ) }}</p>
-        <button @click="toggleDark()" class="px-4 py-2 rounded-full bg-purple-700">
+        <button @click="toggleDark()" class="bg-purple-700 rounded-full px-4 py-2 shadow-lg text-white dark:!text-white hover:bg-purple-800 transition-colors duration-300">
           <span class="text-white" v-if="isDark">{{ t('switchColor.dark') }}</span>
           <span class="text-white" v-else>{{ t('switchColor.light') }}</span>
         </button>
@@ -73,9 +73,9 @@
                 :outline="!selectedTypes.includes(type)" @click="toggleTypeFilter(type)" />
             </div>
             <div class="flex gap-2 justify-end">
-              <button class="px-4 py-2 rounded-full text-zinc-800 dark:text-white border border-purple-700"
+              <button class="px-4 py-2 rounded-full text-zinc-800 dark:text-white border border-purple-700 hover:dark:bg-white/5 hover:bg-zinc-500/5"
                 @click="cleanTypes()">{{ t('filter.buttons.clear') }}</button>
-              <button class="px-4 py-2 rounded-full text-white bg-purple-700" @click="selectAllTypesHandler()">{{ t('filter.buttons.selectAll') }}</button>
+              <button class="px-4 py-2 text-white dark:!text-white bg-purple-700 rounded-full shadow-lg hover:bg-purple-800 transition-colors duration-300" @click="selectAllTypesHandler()">{{ t('filter.buttons.selectAll') }}</button>
             </div>
           </div>
         </section>
@@ -113,9 +113,9 @@
     <!-- Botão flutuante para voltar ao topo -->
     <button 
       @click="scrollToTop" 
-      class="fixed z-50 bottom-8 right-8 bg-purple-700 text-white rounded-full p-3 shadow-lg hover:bg-purple-800 transition-colors duration-300"
+      class="fixed z-40 bottom-8 right-8 bg-purple-700 rounded-full p-3 shadow-lg text-white dark:!text-white hover:bg-purple-800 transition-colors duration-300"
     >
-      <Icon icon="mdi:arrow-up" class="text-2xl" />
+      <Icon icon="mdi:arrow-up" class="text-2xl text-white dark:!text-white" />
     </button>
 
   </main>
@@ -123,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { usePokemonStore } from '@/stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
@@ -174,7 +174,6 @@ const feed = ref(null)
 onMounted(() => {
   getListPokemons()  // Carregar a primeira página de Pokémon~
   selectAllTypesHandler()
-  console.log(pokemonFavoriteList)
 })
 
 const openFilters = ref(false);
@@ -223,26 +222,18 @@ useInfiniteScroll(
       getListPokemons();  // Carregar mais Pokémons para todos os tipos
     }
   },
-  { distance: 100 }
+  { distance: 250 }
 );
 
-const showScrollTopButton = ref(false)
-
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
+  if (feed.value) {
+    (feed.value as HTMLElement).scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+};
 
-const checkScroll = () => {
-  showScrollTopButton.value = window.scrollY > 500
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', checkScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', checkScroll)
-})
 </script>
 
 <style scoped></style>

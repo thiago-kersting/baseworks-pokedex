@@ -16,6 +16,5 @@ body {
 
 * {
   font-family: "Roboto", sans-serif;
-  @apply text-zinc-900 dark:text-zinc-50;
 }
 </style>
