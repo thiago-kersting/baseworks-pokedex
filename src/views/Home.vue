@@ -25,10 +25,6 @@
         </button>
       </div>
       
-        <PokemonComparisonCard
-          :pokemon1="pokemonCompareList[0]"
-          :pokemon2="pokemonCompareList[1]"
-        />
 
       <section class="flex flex-col items-center justify-center gap-10 max-w-[1024px] mx-auto">
         <div class="flex items-end gap-2 md:max-w-[616px] w-full lg:max-w-full justify-between">
@@ -82,7 +78,7 @@
         <ul
           class="flex flex-wrap flex-col items-center md:items-start justify-center md:justify-start md:flex-row lg:gap-x-20 md:gap-x-10 gap-y-6"
           ref="feed">
-          <Card v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" />
+          <Card v-motion-slide-visible-once-bottom v-for="pokemon in pokemonList" :key="pokemon.id" :pokemon="pokemon" />
         </ul>
         <section class="flex items-center justify-center">
           <div class="h-72">
@@ -111,8 +107,12 @@
     </section>
 
     <!-- Botão flutuante para voltar ao topo -->
-    <ButtonScrollTop @click="scrollToTop" />
+    <ButtonScrollTop @click="scrollToTop" v-motion-slide-bottom />
 
+    <PokemonComparisonCard
+          :pokemon1="pokemonCompareList[0]"
+          :pokemon2="pokemonCompareList[1]"
+    />
   </main>
 
 </template>
