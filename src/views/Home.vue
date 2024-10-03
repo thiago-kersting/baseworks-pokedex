@@ -115,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { usePokemonStore } from '@/stores/pokemonStore';
 import { storeToRefs } from 'pinia';
 import { useDark, useInfiniteScroll, useToggle } from '@vueuse/core';
@@ -158,7 +158,7 @@ const pokemonList = computed(() => {
 
 const pokemonStore = usePokemonStore()
 const { isLoading } = storeToRefs(pokemonStore)
-const { getListPokemons } = pokemonStore
+const { getListPokemons, getListPokemonsByType } = pokemonStore
 
 const feed = ref(null)
 
@@ -206,11 +206,18 @@ const selectAllTypesHandler = () => {
   selectAllTypes(typesFilter)
 }
 
+// Adicione este watch para observar mudanças em selectedTypes
+watch(() => selectedTypes.value, (newTypes: string[]) => {
+  if (newTypes.length > 0 && newTypes.length < 18) {
+    getListPokemonsByType(newTypes)
+  }
+}, { deep: true });
+
 // Configuração do Infinite Scroll
 useInfiniteScroll(
   feed, // O elemento no qual o scroll será detectado
   () => {
-    if (!isLoading.value && selectedTypes.value.length > 0 && !showFavorites.value) {
+    if (!isLoading.value && selectedTypes.value.length === 18 && !showFavorites.value) {
       getListPokemons()  // Carregar mais Pokémon ao atingir o final da página
     }
   },

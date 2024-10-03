@@ -34,6 +34,7 @@ export interface PokemonStoreState {
 
 export interface PokemonStoreActions {
   getListPokemons: () => Promise<void>;
+  getListPokemonsByType: (type: string[]) => Promise<void>;
 }
 
 export interface PokemonType {
