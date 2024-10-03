@@ -13,7 +13,7 @@
             <div v-if="pokemonDetails"
                 class="relative w-full max-w-7xl bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6 overflow-hidden">
                 <!-- Novo elemento para o efeito de brilho -->
-                <div :class="`absolute w-96 h-96 rounded-full blur-[500px] bg-${primaryTypeColor}`"></div>
+                <div :class="`absolute w-96 h-96 rounded-full blur-[500px] bg-${primaryTypeColor}/40`"></div>
 
                 <!-- Adicione o botão de voltar aqui, dentro do card -->
                 <button @click="$router.push('/')"
